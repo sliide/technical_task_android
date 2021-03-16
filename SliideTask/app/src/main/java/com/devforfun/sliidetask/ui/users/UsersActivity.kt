@@ -48,7 +48,6 @@ class UsersActivity : AppCompatActivity() {
                 it.errorStringId?.let { errorStringId ->
                     binding.itemList.visibility = View.GONE
                     binding.messageText.text = getString(errorStringId)
-
                 }
             }
         })
