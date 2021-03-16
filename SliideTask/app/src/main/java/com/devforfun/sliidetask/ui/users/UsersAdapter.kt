@@ -69,7 +69,7 @@ class UsersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             date = dateFormat.parse(objectKind.createdAt)
         }
 
-        val currentDate = SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault()).format(date)
+        val currentDate = SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault()).format(date!!)
         val currentTime = SimpleDateFormat("hh:mm aa", Locale.getDefault()).format(date)
         creationDate.text = currentDate
         time.text = currentTime

@@ -1,11 +1,15 @@
 package com.devforfun.sliidetask.di;
 
-import com.devforfun.sliidetask.api.AuthenticationInterceptor
 import com.devforfun.sliidetask.api.ServiceGenerator
 import com.devforfun.sliidetask.repository.UsersRepository
+import com.devforfun.sliidetask.services.NetworkService
+import com.devforfun.sliidetask.services.UsersProvider
+import com.devforfun.sliidetask.services.UsersService
+import com.devforfun.sliidetask.services.impl.NetworkServiceImpl
+import com.devforfun.sliidetask.services.impl.UsersServiceImpl
+import com.devforfun.sliidetask.utils.BaseSchedulerProvider
+import com.devforfun.sliidetask.utils.SchedulerProvider
 import org.koin.dsl.module
-import com.devforfun.sliidetask.services.*
-import com.devforfun.sliidetask.services.impl.*
 
 
 val networkModule = module {
@@ -15,7 +19,10 @@ val networkModule = module {
 val serviceModule = module {
     single<NetworkService> { NetworkServiceImpl(context = get()) }
     single<UsersService>{ UsersServiceImpl(get())}
+    single<BaseSchedulerProvider> {SchedulerProvider()}
 }
+
+
 
 val repositoryModule = module {
     single{ UsersRepository(usersService = get())}

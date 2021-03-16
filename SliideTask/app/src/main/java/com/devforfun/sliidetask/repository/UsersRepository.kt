@@ -1,9 +1,8 @@
 package com.devforfun.sliidetask.repository
 
 import com.devforfun.sliidetask.services.UsersService
+import com.devforfun.sliidetask.services.events.Result
 import com.devforfun.sliidetask.services.model.User
-import com.devforfun.sliidetask.services.model.UserBody
-import io.reactivex.Completable
 import io.reactivex.Single
 
 

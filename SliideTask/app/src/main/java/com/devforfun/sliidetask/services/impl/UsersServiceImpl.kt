@@ -2,7 +2,7 @@ package com.devforfun.sliidetask.services.impl;
 
 
 import com.devforfun.sliidetask.exceptions.InternalServerErrorException
-import com.devforfun.sliidetask.repository.Result
+import com.devforfun.sliidetask.services.events.Result
 import com.devforfun.sliidetask.services.UsersProvider
 import com.devforfun.sliidetask.services.UsersService
 import com.devforfun.sliidetask.services.model.User

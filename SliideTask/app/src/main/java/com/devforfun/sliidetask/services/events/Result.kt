@@ -1,4 +1,4 @@
-package com.devforfun.sliidetask.repository
+package com.devforfun.sliidetask.services.events
 
 /**
  * A generic class that holds a value with its loading status.

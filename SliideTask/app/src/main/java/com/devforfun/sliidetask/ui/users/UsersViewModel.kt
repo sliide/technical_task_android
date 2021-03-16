@@ -2,14 +2,15 @@ package com.devforfun.sliidetask.ui.users
 
 import androidx.lifecycle.*
 import com.devforfun.sliidetask.R
-import com.devforfun.sliidetask.repository.Result
+import com.devforfun.sliidetask.services.events.Result
 import com.devforfun.sliidetask.repository.UsersRepository
 import com.devforfun.sliidetask.services.events.CreateUserResult
 import com.devforfun.sliidetask.services.events.DeleteUserResult
 import com.devforfun.sliidetask.services.events.UsersResult
 import com.devforfun.sliidetask.services.model.User
-import com.devforfun.sliidetask.services.model.UserBody
 import com.devforfun.sliidetask.ui.BaseViewModel
+import com.devforfun.sliidetask.utils.BaseSchedulerProvider
+import com.devforfun.sliidetask.utils.SchedulerProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
@@ -19,6 +20,7 @@ import org.koin.core.component.inject
 open class UsersViewModel : BaseViewModel(), LifecycleObserver {
 
     private val repository by inject<UsersRepository>()
+    private val schedulerProvider by inject<BaseSchedulerProvider>()
 
     private val _usersResult = MutableLiveData<UsersResult>()
     val usersResult: LiveData<UsersResult> = _usersResult
@@ -34,8 +36,8 @@ open class UsersViewModel : BaseViewModel(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun getUsers() {
         disposables.add(
-            repository.getUsers().subscribeOn(io())
-                .observeOn(AndroidSchedulers.mainThread())
+            repository.getUsers().subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe({ userResult ->
                     if (userResult is Result.Success) {
                         _usersResult.value = UsersResult(success = userResult.data)
@@ -52,8 +54,8 @@ open class UsersViewModel : BaseViewModel(), LifecycleObserver {
     fun createUser(name : String, email : String) {
         val user = User(name = name, email = email, status = "Active", gender = "Male")
         disposables.add(repository.createUser(user)
-            .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .subscribe(
                 { userBodyResult->
                     if(userBodyResult is Result.Success) {
@@ -68,8 +70,8 @@ open class UsersViewModel : BaseViewModel(), LifecycleObserver {
 
     fun deleteUser(userId: Int) {
         disposables.add(repository.deleteUser(userId)
-            .subscribeOn(io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .subscribe(
                 { deleteUserResult->
                     if(deleteUserResult is Result.Success) {
