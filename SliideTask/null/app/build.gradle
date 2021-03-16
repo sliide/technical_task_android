@@ -1,0 +1,25 @@
+android {
+    buildTypes {
+        release {
+            minifyEnabled false
+            //TODO add your own url
+            buildConfigField "String", "SERVER_URL", "\"YOUR_URL_GOES_HERE\""
+        }
+
+        debug {
+            //TODO add your own url
+            buildConfigField "String", "SERVER_URL", "\"YOUR_URL_GOES_HERE\""
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+
