@@ -37,6 +37,7 @@ class UsersActivity : AppCompatActivity() {
                 it.success?.let { usersList ->
                     if (usersList.isNotEmpty()) {
                         usersAdapter.updateData(usersList.toMutableList())
+                        binding.itemList.scrollToPosition(usersList.size-1)
                         binding.itemList.visibility = View.VISIBLE
                         binding.messageText.visibility = View.GONE
                     } else {
