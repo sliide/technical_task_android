@@ -2,11 +2,9 @@ package com.devforfun.sliidetask.ui.users
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devforfun.sliidetask.R
@@ -16,7 +14,6 @@ import com.devforfun.sliidetask.utils.CreateUserDialogListener
 import com.devforfun.sliidetask.utils.DialogListener
 import com.devforfun.sliidetask.utils.createUserDialog
 import com.devforfun.sliidetask.utils.noTitleYesOrNoDialog
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_users.view.*
 
 class UsersActivity : AppCompatActivity() {
@@ -69,8 +66,8 @@ class UsersActivity : AppCompatActivity() {
 
         })
 
-        viewModel.createUserResult.observe(this, {createUserResult ->
-            createUserResult?.let {  result->
+        viewModel.createUserResult.observe(this, { createUserResult ->
+            createUserResult?.let { result ->
                 result.success?.let {
                     usersAdapter.insertUser(it)
                     viewModel.getUsers()
@@ -96,19 +93,18 @@ class UsersActivity : AppCompatActivity() {
             createUserDialog(getString(R.string.user_create_dialog_message),
                 R.string.ok, R.string.cancel, object : CreateUserDialogListener {
                     override fun onPositiveClick(name: String, email: String) {
-                        //todo add email validation
-                        if (name.isEmpty() || email.isEmpty()) {
-                            Toast.makeText(
-                                this@UsersActivity,
-                                "Invalid username or email",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            return
-                        } else {
+                        if (viewModel.isInputValid(name, email)) {
                             viewModel.createUser(name, email)
                             Toast.makeText(
                                 this@UsersActivity,
                                 "Creating user: $name",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                        } else {
+                            Toast.makeText(
+                                this@UsersActivity,
+                                "Invalid username or email",
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -124,7 +120,11 @@ class UsersActivity : AppCompatActivity() {
             R.string.ok,
             R.string.cancel, object : DialogListener {
                 override fun onPositiveClick() {
-                    Toast.makeText(this@UsersActivity, "Deleting user " + user.name, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@UsersActivity,
+                        "Deleting user " + user.name,
+                        Toast.LENGTH_LONG
+                    ).show()
                     viewModel.deleteUser(user.id)
                 }
 

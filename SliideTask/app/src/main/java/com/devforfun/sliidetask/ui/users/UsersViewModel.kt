@@ -88,4 +88,11 @@ open class UsersViewModel : BaseViewModel(), LifecycleObserver {
         disposables.clear()
     }
 
+    fun isInputValid(name: String, email: String): Boolean {
+        if(name.isNotEmpty() && email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            return true
+        }
+        return false
+    }
+
 }
