@@ -25,7 +25,6 @@ class UsersAdapter(private var items: MutableList<User>,
 
     fun updateData(newData: MutableList<User>) {
         items = newData
-        items.sortBy { it.name }
         notifyDataSetChanged()
     }
 
@@ -37,14 +36,12 @@ class UsersAdapter(private var items: MutableList<User>,
         val user = items.find { it.id == deletedUserId }
         val index = items.indexOf(user)
         items.removeAt(index)
-        items.sortBy { it.name }
         notifyItemRemoved(index)
     }
 
     fun insertUser(user: User) {
         val index = items.size
         items.add(index ,user)
-        items.sortBy { it.name }
         notifyItemInserted(index)
     }
 }

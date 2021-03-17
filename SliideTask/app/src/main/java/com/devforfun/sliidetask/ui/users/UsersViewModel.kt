@@ -2,18 +2,15 @@ package com.devforfun.sliidetask.ui.users
 
 import androidx.lifecycle.*
 import com.devforfun.sliidetask.R
-import com.devforfun.sliidetask.services.events.Result
 import com.devforfun.sliidetask.repository.UsersRepository
 import com.devforfun.sliidetask.services.events.CreateUserResult
 import com.devforfun.sliidetask.services.events.DeleteUserResult
+import com.devforfun.sliidetask.services.events.Result
 import com.devforfun.sliidetask.services.events.UsersResult
 import com.devforfun.sliidetask.services.model.User
 import com.devforfun.sliidetask.ui.BaseViewModel
 import com.devforfun.sliidetask.utils.BaseSchedulerProvider
-import com.devforfun.sliidetask.utils.SchedulerProvider
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers.io
 import org.koin.core.component.inject
 
 
