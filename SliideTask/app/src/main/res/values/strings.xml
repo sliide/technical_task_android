@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SliideTask</string>
+    <string name="error_fetching_users">Error fetching users</string>
+    <string name="no_users_available">No users available</string>
+    <string name="searching_for_users">Searching for users...</string>
+    <string name="try_again">Try Again</string>
+    <string name="delete_user_warning_message">Are you sure you want to delete %1$s?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_delete_users">Error deleting the user</string>
+    <string name="error_create_user">Error creating user</string>
+    <string name="user_name">User Name</string>
+    <string name="email">Email</string>
+    <string name="user_create_dialog_message">Create user by adding name and email address.</string>
+</resources>

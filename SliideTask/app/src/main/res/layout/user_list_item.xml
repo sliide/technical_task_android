@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="16dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="1"
+        android:orientation="horizontal"
+        />
+
+    <TextView
+        android:id="@+id/textViewLeftItem"
+        android:layout_width="64dp"
+        android:layout_height="0dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center|center_vertical"
+        tools:text="12:00 PM"
+        android:paddingEnd="12dp"
+        android:paddingStart="0dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/horizontalGuideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textViewHead"
+        style="@style/HeadItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/textViewLeftItem"
+        tools:text = "Tenali Ramjhakrishna"
+        />
+
+    <TextView
+        android:id="@+id/texViewSubHead"
+        style="@style/SubHeadItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/textViewLeftItem"
+        app:layout_constraintTop_toBottomOf="@id/textViewHead"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text = "tenali.ramahkrishna@15ce.com"
+        />
+
+    <TextView
+        android:id="@+id/texViewSubSubHead"
+        style="@style/SubSubHeadItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/textViewLeftItem"
+        app:layout_constraintTop_toBottomOf="@id/texViewSubHead"
+        tools:text = "2021-03-16T02:03:51.544+05:30"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
