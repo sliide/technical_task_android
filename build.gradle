@@ -31,6 +31,9 @@ buildscript {
         junitVersion = "4.13.2"
         androidJunitVersion = "1.1.3"
         espressoVersion = "3.4.0"
+        mockk = "1.12.0"
+        archCoreTest = "2.1.0"
+        coroutinesTest = "1.4.2"
     }
     repositories {
         google()
