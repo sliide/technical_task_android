@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">AndreiHaiu Task</string>
+
+    <!--Error codes-->
+    <string name="error_general">Something went wrong. Please try again later</string>
+    <string name="error_no_internet">Please check your internet connection and try again</string>
+    <string name="error_http">This is an HTTP error</string>
+    <string name="wrong_password_or_email">The e-mail or password is invalid.</string>
+    <string name="account_locked">Your account has been blocked. Please check your e-mail for your unlock link.</string>
+    <string name="customer_exists">A customer with this e-mail already exists.</string>
+    <string name="already_unlocked">Your account has already been unlocked.</string>
+    <string name="bad_request">HTTP Bad Request</string>
+    <string name="something_went_wrong">Something went wrong :(</string>
+    <string name="content_description">description</string>
+    <string name="delete_user_cancel">Cancel</string>
+    <string name="delete_user_remove">Remove</string>
+    <string name="delete_user_title">Are you sure you want to remove this user?</string>
+    <string name="add_user_title">Add new user</string>
+    <string name="add_user_cancel">Cancel</string>
+    <string name="add_user_submit">Add user</string>
+    <string name="add_user_hint_name">Name</string>
+    <string name="add_user_hint_email">Email</string>
+    <string name="add_user_hint_gender">Gender</string>
+</resources>

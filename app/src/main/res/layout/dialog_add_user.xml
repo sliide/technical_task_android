@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_general_dialog"
+        android:padding="@dimen/spacing_medium">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/spacing_big"
+            android:layout_height="@dimen/spacing_big"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_lesser_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:gravity="center"
+            android:text="@string/add_user_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fsBody25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivClose" />
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_lesser_medium"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:gravity="start"
+            android:hint="@string/add_user_hint_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fsBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_lesser_medium"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:gravity="start"
+            android:hint="@string/add_user_hint_email"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fsBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etName" />
+
+        <EditText
+            android:id="@+id/etGender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_lesser_medium"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:gravity="start"
+            android:hint="@string/add_user_hint_gender"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fsBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etEmail" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPositive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_lesser_medium"
+            android:layout_marginTop="@dimen/spacing_big"
+            android:text="@string/add_user_submit"
+            app:layout_constraintTop_toBottomOf="@id/etGender" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnNegative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:drawablePadding="@dimen/spacing_small"
+            android:gravity="center"
+            android:padding="@dimen/padding_default"
+            android:text="@string/add_user_cancel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fsBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnPositive"
+            tools:drawableStartCompat="@drawable/ic_phone_alt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

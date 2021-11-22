@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_general_dialog"
+        android:padding="@dimen/spacing_medium">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/spacing_big"
+            android:layout_height="@dimen/spacing_big"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_lesser_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fsBody25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivClose"
+            android:text="@string/delete_user_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPositive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_lesser_medium"
+            android:layout_marginTop="@dimen/spacing_big"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:text="@string/delete_user_remove" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnNegative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:drawablePadding="@dimen/spacing_small"
+            android:gravity="center"
+            android:padding="@dimen/padding_default"
+            android:textColor="@color/black"
+            android:textSize="@dimen/fsBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnPositive"
+            tools:drawableStartCompat="@drawable/ic_phone_alt"
+            android:text="@string/delete_user_cancel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
