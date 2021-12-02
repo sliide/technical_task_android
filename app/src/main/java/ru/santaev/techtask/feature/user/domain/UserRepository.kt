@@ -15,4 +15,10 @@ class UserRepository @Inject constructor(
             userApi.getUsers(page)
         }
     }
+
+    suspend fun createUser(name: String, email: String) {
+        return withContext(Dispatchers.IO) {
+            userApi.createUser(name = name, email = email, gender = "male", status = "active")
+        }
+    }
 }

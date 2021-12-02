@@ -11,6 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.santaev.techtask.BuildConfig
 import ru.santaev.techtask.network.api.UserApiService
+import ru.santaev.techtask.network.auth.AuthInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -33,6 +34,7 @@ class NetworkModule {
             .connectTimeout(HTTP_CLIENT_CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .readTimeout(HTTP_CLIENT_READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(HTTP_CLIENT_WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .addInterceptor(AuthInterceptor("Bearer", AUTH_TOKEN))
             .addInterceptor(loggingInterceptor)
             .build()
     }
@@ -69,6 +71,8 @@ class NetworkModule {
 
     companion object {
         private const val BASE_URL = "https://gorest.co.in/"
+        // TODO extract to build variable
+        private const val AUTH_TOKEN = "a220f931c2472038f4c50e0777b058a8a9faa2579686728c0cf0d5ab5613b085"
         private const val HTTP_CLIENT_CONNECTION_TIMEOUT_SECONDS = 10L
         private const val HTTP_CLIENT_READ_TIMEOUT_SECONDS = 30L
         private const val HTTP_CLIENT_WRITE_TIMEOUT_SECONDS = 30L

@@ -17,3 +17,8 @@ fun bindInvisibleUnless(view: View, visible: Boolean) {
     TransitionManager.beginDelayedTransition(view.parent as ViewGroup)
 }
 
+
+@BindingAdapter("bindEnabledUnless")
+fun bindEnabledUnless(view: View, disabled: Boolean) {
+    view.isEnabled = !disabled
+}

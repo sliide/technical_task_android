@@ -11,4 +11,8 @@ class UserInteractor @Inject constructor(
         val response = userRepository.getUsers(page = null)
         return userRepository.getUsers(page = response.meta.pagination.pages).data
     }
+
+    suspend fun createUser(name: String, email: String) {
+        return userRepository.createUser(name, email)
+    }
 }
