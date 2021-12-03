@@ -54,7 +54,7 @@ class UsersViewModel @Inject constructor(
     private val _isUsersLoading = MutableStateFlow(true)
     val isUsersLoading: StateFlow<Boolean> = _isUsersLoading
 
-    private val _isErrorOccurred = MutableStateFlow(true)
+    private val _isErrorOccurred = MutableStateFlow(false)
     val isErrorStateVisible: StateFlow<Boolean> = _isErrorOccurred
 
     private val _showUserDeletingConfirmation = MutableStateFlow<Event<DeleteUserRequest>?>(null)
