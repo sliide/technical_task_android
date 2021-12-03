@@ -15,6 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import ru.santaev.techtask.feature.user.domain.UserInteractor
+import ru.santaev.techtask.feature.user.ui.bus.UserListChangedEventBus
 import ru.santaev.techtask.utils.Event
 import ru.santaev.techtask.utils.MainDispatcherInitializerRule
 
@@ -30,12 +31,14 @@ class UserCreationViewModelTest {
 
     @RelaxedMockK
     private lateinit var userInteractor: UserInteractor
+    private lateinit var userListChangedEventBus: UserListChangedEventBus
 
     private lateinit var viewModel: UserCreationViewModel
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
+        userListChangedEventBus = UserListChangedEventBus()
     }
 
     @Test
@@ -135,6 +138,6 @@ class UserCreationViewModelTest {
     }
 
     private fun createViewModel() {
-        viewModel = UserCreationViewModel(userInteractor)
+        viewModel = UserCreationViewModel(userInteractor, userListChangedEventBus)
     }
 }

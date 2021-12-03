@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import ru.santaev.techtask.databinding.FragmentUserCreationBinding
 import ru.santaev.techtask.utils.ViewModelFactory
 import ru.santaev.techtask.utils.appComponent

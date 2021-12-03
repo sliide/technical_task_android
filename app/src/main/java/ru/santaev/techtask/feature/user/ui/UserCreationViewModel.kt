@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.santaev.techtask.feature.user.domain.UserInteractor
+import ru.santaev.techtask.feature.user.ui.bus.UserListChangedEventBus
 import ru.santaev.techtask.utils.BaseViewModel
 import ru.santaev.techtask.utils.Event
 import ru.santaev.techtask.utils.showToast
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UserCreationViewModel @Inject constructor(
-    private val interactor: UserInteractor
+    private val interactor: UserInteractor,
+    private val userListChangedEventBus: UserListChangedEventBus
 ) : BaseViewModel() {
 
     val name = MutableStateFlow("")
@@ -39,6 +41,7 @@ class UserCreationViewModel @Inject constructor(
             runWithProgress {
                 interactor.createUser(name.value, email.value)
                 showToast("User has been added")
+                userListChangedEventBus.notifyUserListChanged()
                 exit.tryEmit(Event(true))
             }
         }

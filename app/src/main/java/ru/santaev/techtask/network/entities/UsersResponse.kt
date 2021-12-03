@@ -19,7 +19,5 @@ data class PaginationMetaInfo(
 data class UserEntity(
     val id: Long,
     val name: String,
-    val email: String,
-    val gender: String,
-    val status: String
+    val email: String
 )

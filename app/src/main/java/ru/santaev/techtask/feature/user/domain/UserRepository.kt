@@ -21,4 +21,10 @@ class UserRepository @Inject constructor(
             userApi.createUser(name = name, email = email, gender = "male", status = "active")
         }
     }
+
+    suspend fun deleteUser(userId: Long) {
+        return withContext(Dispatchers.IO) {
+            userApi.deleteUser(userId)
+        }
+    }
 }

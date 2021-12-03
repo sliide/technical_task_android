@@ -3,10 +3,12 @@ package ru.santaev.techtask.feature.user.ui.adapter
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.DiffUtil
 import ru.santaev.techtask.databinding.ListItemUserBinding
-import ru.santaev.techtask.network.entities.UserEntity
+import ru.santaev.techtask.feature.user.ui.entity.UserUiEntity
 import ru.santaev.techtask.utils.ListAdapter
 
-class UserAdapter : ListAdapter<UserEntity>(UserListDiffUtil()) {
+class UserAdapter(
+    private val userLongClickListener: (Long) -> Unit
+) : ListAdapter<UserUiEntity>(UserListDiffUtil()) {
 
     init {
         registerView(
@@ -19,23 +21,27 @@ class UserAdapter : ListAdapter<UserEntity>(UserListDiffUtil()) {
         )
     }
 
-    private class UserViewHolder(
+    private inner class UserViewHolder(
         private val binding: ListItemUserBinding
-    ) : ViewHolder<UserEntity>(binding.root) {
+    ) : ViewHolder<UserUiEntity>(binding.root) {
 
-        override fun bind(item: UserEntity) {
+        override fun bind(item: UserUiEntity) {
             binding.item = item
+            binding.root.setOnLongClickListener {
+                userLongClickListener.invoke(item.id)
+                true
+            }
             binding.executePendingBindings()
         }
     }
 }
 
-private class UserListDiffUtil : DiffUtil.ItemCallback<UserEntity>() {
-    override fun areItemsTheSame(oldItem: UserEntity, newItem: UserEntity): Boolean {
+private class UserListDiffUtil : DiffUtil.ItemCallback<UserUiEntity>() {
+    override fun areItemsTheSame(oldItem: UserUiEntity, newItem: UserUiEntity): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: UserEntity, newItem: UserEntity): Boolean {
+    override fun areContentsTheSame(oldItem: UserUiEntity, newItem: UserUiEntity): Boolean {
         return oldItem == newItem
     }
 }
