@@ -1,13 +1,20 @@
 package com.sa.gorestuserstask.data.remote
 
-import com.google.gson.annotations.SerializedName
 
-
-data class UserApiResponse(
-    val meta: Meta = Meta(),
-    @SerializedName("data")
-    val users: List<UserApiModel> = listOf()
+abstract class ApiResponse(
+    val meta: Meta? = null,
 )
+
+class UserApiResponse(
+    val data: List<UserApiModel> = listOf()
+) : ApiResponse()
+
+
+class AddUserApiResponse(
+    val data: UserApiModel = UserApiModel()
+) : ApiResponse()
+
+class EmptyResponse : ApiResponse()
 
 data class Meta(
     val pagination: Pagination = Pagination()
@@ -35,9 +42,8 @@ data class UserApiRequest(
     val status: String
 )
 
-data class AddUserApiResponse(
-    @SerializedName("data")
-    val user: UserApiModel = UserApiModel()
+data class ApiError(
+    val field: String?,
+    val message: String = ""
 )
-
 
