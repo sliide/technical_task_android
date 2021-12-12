@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GorestUsersTask</string>
+
+    <string name="user_gender_male">Male</string>
+    <string name="user_gender_female">Female</string>
+    <string name="user_status_active">Active</string>
+    <string name="user_status_inactive">Inactive</string>
 </resources>
