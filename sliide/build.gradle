@@ -1,0 +1,44 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        kt = '1.5.31'
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kt"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.19.0")
+}
+
+task appDetekt(type: io.gitlab.arturbosch.detekt.Detekt) {
+    config.from(files("$rootDir/gradle/detekt.yml"))
+    reports {
+        html {
+            enabled = true
+            destination = file("$rootDir/app/build/detekt/report.html")
+        }
+        xml.enabled = false
+        txt.enabled = false
+    }
+    source = files(rootDir)
+}
+
+apply from: 'gradle/lint.gradle'
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
