@@ -1,7 +1,7 @@
-package com.sachin_sapkale_android_challenge.local.repository
+package com.android_test_maverick.local.repository
 
-import com.sachin_sapkale_android_challenge.SingleItemModel
-import com.sachin_sapkale_android_challenge.local.AccessDao
+import com.android_test_maverick.SingleItemModel
+import com.android_test_maverick.local.AccessDao
 import javax.inject.Inject
 
 class LocalRepository @Inject constructor(private val yourDAO: AccessDao){

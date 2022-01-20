@@ -1,7 +1,7 @@
-package com.sachin_sapkale_android_challenge.remote
+package com.android_test_maverick.remote
 
-import com.sachin_sapkale_android_challenge.HitsResponse
-import com.sachin_sapkale_android_challenge.remote.source.RemoteDataSource
+import com.android_test_maverick.HitsResponse
+import com.android_test_maverick.remote.source.RemoteDataSource
 import retrofit2.Response
 import retrofit2.http.GET
 

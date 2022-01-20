@@ -1,8 +1,8 @@
-package com.sachin_sapkale_android_challenge.local.source
+package com.android_test_maverick.local.source
 
 import android.content.Context
 import androidx.room.Room
-import com.sachin_sapkale_android_challenge.local.AppDatabase
+import com.android_test_maverick.local.AppDatabase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

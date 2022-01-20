@@ -1,4 +1,4 @@
-package com.sachin_sapkale_android_challenge
+package com.android_test_maverick
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,10 +1,10 @@
-package com.sachin_sapkale_android_challenge.local
+package com.android_test_maverick.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sachin_sapkale_android_challenge.SingleItemModel
+import com.android_test_maverick.SingleItemModel
 
 @Dao
 interface AccessDao {

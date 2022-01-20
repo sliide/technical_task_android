@@ -1,8 +1,8 @@
-package com.sachin_sapkale_android_challenge.local
+package com.android_test_maverick.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.sachin_sapkale_android_challenge.SingleItemModel
+import com.android_test_maverick.SingleItemModel
 
 @Database(entities = [SingleItemModel::class], version = 1, exportSchema =false)
 abstract class AppDatabase : RoomDatabase() {

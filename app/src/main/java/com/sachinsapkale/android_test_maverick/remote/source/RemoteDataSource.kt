@@ -1,4 +1,4 @@
-package com.sachin_sapkale_android_challenge.remote.source
+package com.android_test_maverick.remote.source
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
