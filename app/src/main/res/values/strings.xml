@@ -3,4 +3,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="list_fragment">list_fragment</string>
     <string name="detail_fragment">detail_fragment</string>
+    <string name="create_user_label">Create New User</string>
+    <string name="create_user_sublabel">Enter the details below to create a new user and click on \'Save\'</string>
+    <string name="hint_name">enter name</string>
+    <string name="hint_email">enter email</string>
+    <string name="label_gender">Select gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="user_added">%1$s , Added Successfully</string>
 </resources>

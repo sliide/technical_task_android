@@ -11,10 +11,15 @@ import com.sachinsapkale.android_test_maverick.databinding.AdapterListBinding
 class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
     var movieList = mutableListOf<UserModel>()
+    private lateinit var listener: ListAdapterListener
 
-    fun setMovies(movies: List<UserModel>) {
+    fun setUser(movies: List<UserModel>) {
         this.movieList = movies.toMutableList()
         notifyDataSetChanged()
+    }
+
+    fun setListener(lstnr: ListAdapterListener) {
+        this.listener = lstnr
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -27,13 +32,15 @@ class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
 
         val movie = movieList[position]
-//        holder.binding.name.text = movie.user +"|"+movie.tags
         holder.bind(movie)
-//        Glide.with(holder.itemView.context).load(movie.previewUrl).into(holder.binding.imageview)
     }
 
     override fun getItemCount(): Int {
         return movieList.size
+    }
+
+    interface ListAdapterListener{
+        fun onUserDelete(user: UserModel)
     }
 }
 

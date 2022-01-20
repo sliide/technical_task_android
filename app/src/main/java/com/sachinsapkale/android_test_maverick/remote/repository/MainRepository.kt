@@ -7,4 +7,8 @@ class MainRepository @Inject constructor(private val retrofitService: RetrofitSe
 
     suspend fun getSearchList(pageNumber : Int) = retrofitService.getSearchList(pageNumber)
 
+    suspend fun createNewUser(token : String) = retrofitService.createNewUser(token)
+
+    suspend fun deleteUser(token : String) = retrofitService.deleteUser(token)
+
 }

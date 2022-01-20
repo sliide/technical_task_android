@@ -14,4 +14,7 @@ interface AccessDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(users: List<UserModel>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(user: UserModel)
 }

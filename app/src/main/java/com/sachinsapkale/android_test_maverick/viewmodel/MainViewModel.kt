@@ -13,7 +13,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository, private val localRepository: LocalRepository) : ViewModel() {
 
     val errorMessage = MutableLiveData<String>()
-    val movieList = MutableLiveData<List<UserModel>>()
+    val userList = MutableLiveData<List<UserModel>>()
+    val singleUser = MutableLiveData<UserModel>()
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
@@ -48,18 +49,75 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     fun getSearchListFromDB(list: List<UserModel>) {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val insertinDb = localRepository.insertSingleItemInDB(list)
+            val insertinDb = localRepository.insertUserListInDB(list)
             val insertedInList = localRepository.getAllItemsInDB()
             withContext(Dispatchers.Main) {
                 if (insertedInList != null && insertedInList.size > 0) {
-                    movieList.postValue(insertedInList)
+                    userList.postValue(insertedInList)
                     loading.value = false
                 } else {
                     onError("Error : No items found ")
                 }
             }
         }
+    }
 
+    fun createNewUser(token : String,user: UserModel) {
+        loading.value = true
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = mainRepository.createNewUser(token)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful && response.code() == 201) {
+                    insertUserInDB(user)
+                } else {
+                    onError("Error : ${response.message()} ")
+                }
+            }
+        }
+
+    }
+
+    fun insertUserInDB(user: UserModel) {
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val insertinDb = localRepository.insertSingleUserInDB(user)
+            withContext(Dispatchers.Main) {
+                if (insertinDb != null) {
+                    singleUser.postValue(user)
+                    loading.value = false
+                } else {
+                    onError("Error : No items found ")
+                }
+            }
+        }
+    }
+
+    fun deleteUser(token : String,user: UserModel) {
+        loading.value = true
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = mainRepository.createNewUser(token)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful && response.code() == 201) {
+                    insertUserInDB(user)
+                } else {
+                    onError("Error : ${response.message()} ")
+                }
+            }
+        }
+
+    }
+
+    fun insertUserInDB(user: UserModel) {
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val insertinDb = localRepository.insertSingleUserInDB(user)
+            withContext(Dispatchers.Main) {
+                if (insertinDb != null) {
+                    singleUser.postValue(user)
+                    loading.value = false
+                } else {
+                    onError("Error : No items found ")
+                }
+            }
+        }
     }
 
 }

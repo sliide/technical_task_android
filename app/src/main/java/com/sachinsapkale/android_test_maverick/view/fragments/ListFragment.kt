@@ -1,72 +1,39 @@
 package com.android_test_maverick.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.android_test_maverick.UserModel
 import com.android_test_maverick.view.ListAdapter
 import com.sachin_sapkale_android_challenge.viewmodel.MainViewModel
+import com.sachinsapkale.android_test_maverick.BuildConfig
+import com.sachinsapkale.android_test_maverick.R
 import com.sachinsapkale.android_test_maverick.databinding.FragmentListBinding
+import com.sachinsapkale.android_test_maverick.view.fragments.CreateUserBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 @AndroidEntryPoint
-class ListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+class ListFragment : Fragment(),
+    CreateUserBottomSheetDialogFragment.CreateUserListener,
+    ListAdapter.ListAdapterListener{
     private val viewModel: MainViewModel by viewModels()
     private val adapter = ListAdapter()
     var binding: FragmentListBinding? = null
-    val deafultPageNumber : Int = 1 // setting default to get last page number
+    val deafultPageNumber: Int = 1 // setting default to get last page number
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentListBinding.inflate(inflater, container, false)
         //set variables in Binding
         return binding!!.root
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                ListFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,8 +41,9 @@ class ListFragment : Fragment() {
 
         binding?.myAdapter = adapter
 
-        viewModel.movieList.observe(this, {
-            adapter.setMovies(it)
+        viewModel.userList.observe(this, {
+            adapter.setUser(it)
+            adapter.setListener(this)
         })
 
         viewModel.errorMessage.observe(this, {
@@ -91,5 +59,28 @@ class ListFragment : Fragment() {
         })
 
         viewModel.getLastPageNumbner(deafultPageNumber)
+
+    }
+
+    override fun onNewUserClicked(user: UserModel) {
+        viewModel.createNewUser(BuildConfig.ACCESS_TOKEN,user)
+        viewModel.singleUser.observe(this, {
+            Toast.makeText(context, getString(R.string.user_added,user.name), Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.errorMessage.observe(this, {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    override fun onUserDelete(user: UserModel) {
+        viewModel.createNewUser(BuildConfig.ACCESS_TOKEN,user)
+        viewModel.singleUser.observe(this, {
+            Toast.makeText(context, getString(R.string.user_added,user.name), Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.errorMessage.observe(this, {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
     }
 }

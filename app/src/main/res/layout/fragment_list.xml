@@ -31,6 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
+            android:onClickListener="@{myAdapter.setListener()}"
             android:adapter="@{myAdapter}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

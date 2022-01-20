@@ -11,11 +11,4 @@
         android:label="@string/list_fragment"
         tools:layout="@layout/fragment_list" />
 
-
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.android_test_maverick.view.fragments.DetailFragment"
-        android:label="@string/detail_fragment"
-        tools:layout="@layout/fragment_detail" />
-
 </navigation>
