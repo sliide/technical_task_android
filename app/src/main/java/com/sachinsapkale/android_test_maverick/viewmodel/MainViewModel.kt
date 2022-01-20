@@ -15,6 +15,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     val errorMessage = MutableLiveData<String>()
     val userList = MutableLiveData<List<UserModel>>()
     val singleUser = MutableLiveData<UserModel>()
+    val deleteUser = MutableLiveData<UserModel>()
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
@@ -94,10 +95,10 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     fun deleteUser(token : String,user: UserModel) {
         loading.value = true
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = mainRepository.createNewUser(token)
+            val response = mainRepository.deleteUser(user.id)
             withContext(Dispatchers.Main) {
-                if (response.isSuccessful && response.code() == 201) {
-                    insertUserInDB(user)
+                if (response.isSuccessful && response.code() == 204) {
+                    deletetUserFromDB(user)
                 } else {
                     onError("Error : ${response.message()} ")
                 }
@@ -106,12 +107,12 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     }
 
-    fun insertUserInDB(user: UserModel) {
+    fun deletetUserFromDB(user: UserModel) {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val insertinDb = localRepository.insertSingleUserInDB(user)
+            val insertinDb = localRepository.deleteUserFromDB(user)
             withContext(Dispatchers.Main) {
                 if (insertinDb != null) {
-                    singleUser.postValue(user)
+                    deleteUser.postValue(user)
                     loading.value = false
                 } else {
                     onError("Error : No items found ")

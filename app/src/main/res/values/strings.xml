@@ -11,4 +11,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="user_added">%1$s , Added Successfully</string>
+    <string name="user_deleted">%1$s , Deleted Successfully</string>
+    <string name="label_user_list">User List from last page</string>
+    <string name="add_user">Add User +</string>
 </resources>

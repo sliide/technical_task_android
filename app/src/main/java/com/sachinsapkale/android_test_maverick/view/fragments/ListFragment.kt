@@ -75,8 +75,8 @@ class ListFragment : Fragment(),
 
     override fun onUserDelete(user: UserModel) {
         viewModel.createNewUser(BuildConfig.ACCESS_TOKEN,user)
-        viewModel.singleUser.observe(this, {
-            Toast.makeText(context, getString(R.string.user_added,user.name), Toast.LENGTH_SHORT).show()
+        viewModel.deleteUser.observe(this, {
+            Toast.makeText(context, getString(R.string.user_deleted,user.name), Toast.LENGTH_SHORT).show()
         })
 
         viewModel.errorMessage.observe(this, {

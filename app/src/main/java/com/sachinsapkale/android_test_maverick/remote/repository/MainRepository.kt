@@ -9,6 +9,6 @@ class MainRepository @Inject constructor(private val retrofitService: RetrofitSe
 
     suspend fun createNewUser(token : String) = retrofitService.createNewUser(token)
 
-    suspend fun deleteUser(token : String) = retrofitService.deleteUser(token)
+    suspend fun deleteUser(userId: Int,token : String) = retrofitService.deleteUser(userId,token)
 
 }
