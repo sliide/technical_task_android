@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor() {
-    private val API_BASE_URL = "https://pixabay.com/"
+    private val API_BASE_URL = "https://gorest.co.in/"
     val retrofit: Retrofit
 
     init {

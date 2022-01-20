@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.android_test_maverick.viewmodel.MainViewModel
-import com.android_test_maverick.databinding.FragmentListBinding
 import com.android_test_maverick.view.ListAdapter
+import com.sachin_sapkale_android_challenge.viewmodel.MainViewModel
+import com.sachinsapkale.android_test_maverick.databinding.FragmentListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +32,7 @@ class ListFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
     private val adapter = ListAdapter()
     var binding: FragmentListBinding? = null
+    val deafultPageNumber : Int = 1 // setting default to get last page number
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +90,6 @@ class ListFragment : Fragment() {
             }
         })
 
-        viewModel.getSearchList()
+        viewModel.getLastPageNumbner(deafultPageNumber)
     }
 }

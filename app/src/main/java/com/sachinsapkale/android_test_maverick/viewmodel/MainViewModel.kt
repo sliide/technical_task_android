@@ -2,7 +2,7 @@ package com.sachin_sapkale_android_challenge.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android_test_maverick.SingleItemModel
+import com.android_test_maverick.UserModel
 import com.android_test_maverick.local.repository.LocalRepository
 import com.android_test_maverick.remote.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,19 +13,21 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository, private val localRepository: LocalRepository) : ViewModel() {
 
     val errorMessage = MutableLiveData<String>()
-    val movieList = MutableLiveData<List<SingleItemModel>>()
+    val movieList = MutableLiveData<List<UserModel>>()
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
     val loading = MutableLiveData<Boolean>()
 
-    fun getSearchList() {
+    fun getLastPageNumbner(pageNumber : Int) {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = mainRepository.getSearchList()
+            val findPLastPage = mainRepository.getSearchList(pageNumber)
+            val page = findPLastPage.body()!!.meta.pagination.pages
+            val response = mainRepository.getSearchList(page)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    getSearchListFromDB(response.body()!!.hits)
+                    getSearchListFromDB(response.body()!!.data)
                 } else {
                     onError("Error : ${response.message()} ")
                 }
@@ -44,7 +46,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         job?.cancel()
     }
 
-    fun getSearchListFromDB(list: List<SingleItemModel>) {
+    fun getSearchListFromDB(list: List<UserModel>) {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val insertinDb = localRepository.insertSingleItemInDB(list)
             val insertedInList = localRepository.getAllItemsInDB()

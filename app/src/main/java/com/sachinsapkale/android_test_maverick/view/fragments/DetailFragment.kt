@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.android_test_maverick.viewmodel.MainViewModel
-import com.android_test_maverick.databinding.FragmentDetailBinding
 import com.android_test_maverick.view.ListAdapter
+import com.sachin_sapkale_android_challenge.viewmodel.MainViewModel
+import com.sachinsapkale.android_test_maverick.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -90,6 +90,6 @@ class DetailFragment : Fragment() {
             }
         })
 
-        viewModel.getSearchList()
+//        viewModel.getSearchList("9")
     }
 }

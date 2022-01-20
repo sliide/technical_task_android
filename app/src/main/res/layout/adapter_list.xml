@@ -7,7 +7,7 @@
     <data>
         <variable
             name="itemViewModel"
-            type="com.android_test_maverick.SingleItemModel" />
+            type="com.android_test_maverick.UserModel" />
     </data>
 
 <androidx.cardview.widget.CardView
@@ -35,7 +35,7 @@
         android:background="#E1303F9F"
         android:paddingStart="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:text="@{itemViewModel.user}"/>
+        android:text="@{itemViewModel.name}"/>
 
 </androidx.cardview.widget.CardView>
 </layout>

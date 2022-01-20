@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val retrofitService: RetrofitService) {
 
-    suspend fun getSearchList() = retrofitService.getSearchList()
+    suspend fun getSearchList(pageNumber : Int) = retrofitService.getSearchList(pageNumber)
 
 }

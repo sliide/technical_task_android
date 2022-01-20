@@ -3,15 +3,16 @@ package com.android_test_maverick.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.android_test_maverick.SingleItemModel
+import com.android_test_maverick.UserModel
+import com.sachinsapkale.android_test_maverick.BR
 import com.sachinsapkale.android_test_maverick.databinding.AdapterListBinding
 
 
 class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
-    var movieList = mutableListOf<SingleItemModel>()
+    var movieList = mutableListOf<UserModel>()
 
-    fun setMovies(movies: List<SingleItemModel>) {
+    fun setMovies(movies: List<UserModel>) {
         this.movieList = movies.toMutableList()
         notifyDataSetChanged()
     }
@@ -38,7 +39,7 @@ class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
 class MainViewHolder(val binding: AdapterListBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(obj: Any?) {
-        binding.setVariable(BR.itemViewModel, obj)
+        binding.setVariable(BR.itemViewModel,obj)
         binding.executePendingBindings()
     }
 }
