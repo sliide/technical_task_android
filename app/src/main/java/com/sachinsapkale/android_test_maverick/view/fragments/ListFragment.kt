@@ -45,7 +45,7 @@ class ListFragment : Fragment(),
 
         binding?.myAdapter = adapter
 
-        viewModel.userList.observe(this, {
+        viewModel.userList.observe(viewLifecycleOwner, {
             Collections.reverse(it)
             adapter.setUser(it)
             adapter.setListener(this)
@@ -55,7 +55,7 @@ class ListFragment : Fragment(),
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
 
-        viewModel.loading.observe(this, Observer {
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
             if (it) {
                 binding?.let { it.progressDialog.visibility = View.VISIBLE }
             } else {
@@ -70,16 +70,14 @@ class ListFragment : Fragment(),
 
     override fun onNewUserClicked(user: UserModel) {
         viewModel.createNewUser(BuildConfig.ACCESS_TOKEN,user)
-        viewModel.singleUser.observe(this, {
-            Toast.makeText(context, getString(R.string.user_added,user.name), Toast.LENGTH_SHORT).show()
+        viewModel.singleUser.observe(viewLifecycleOwner, {
             viewModel.getLastPageNumbner(deafultPageNumber)
         })
-        adapter.addUser(user)
     }
 
     override fun onUserDelete(user: UserModel): Boolean {
 
-        val dialogBuilder = AlertDialog.Builder(activity!!)
+        val dialogBuilder = AlertDialog.Builder(context)
         dialogBuilder.setMessage(getString(R.string.are_you_sure))
             .setTitle(getString(R.string.remove_user,user.name))
             .setCancelable(true)
@@ -87,12 +85,11 @@ class ListFragment : Fragment(),
                     dialog, id ->
                 dialog.dismiss()
                 viewModel.deleteUser(BuildConfig.ACCESS_TOKEN,user)
-                viewModel.deleteUser.observe(this, {
-                    Toast.makeText(context, getString(R.string.user_deleted,user.name), Toast.LENGTH_SHORT).show()
+                viewModel.deleteUser.observe(viewLifecycleOwner, {
                     viewModel.getLastPageNumbner(deafultPageNumber)
                 })
 
-                viewModel.errorMessage.observe(this, {
+                viewModel.errorMessage.observe(viewLifecycleOwner, {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
                 })
 
@@ -100,7 +97,6 @@ class ListFragment : Fragment(),
 
 
         val alert = dialogBuilder.create()
-        alert.setTitle("Test")
         alert.show()
         return true
     }

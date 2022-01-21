@@ -18,17 +18,41 @@
     android:elevation="8dp"
     app:cardCornerRadius="8dp">
 
-    <TextView
-        android:id="@+id/name"
+    <LinearLayout
+        android:id="@+id/containerParent"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="@tools:sample/full_names"
-        android:paddingStart="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:text="@{itemViewModel.name}"/>
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@tools:sample/full_names"
+            android:paddingStart="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="@{itemViewModel.name}"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@tools:sample/full_names"
+            android:paddingStart="8dp"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="@{itemViewModel.email}"/>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
 </layout>

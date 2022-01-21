@@ -19,6 +19,6 @@
     <string name="empty_email">Email cannot be empty</string>
     <string name="invalid_email">Invalid email address</string>
     <string name="invalid_gender">Choose one gender option</string>
-    <string name="are_you_sure">“Are you sure you want to remove this user?</string>
+    <string name="are_you_sure">Are you sure you want to remove this user?</string>
     <string name="remove_user">Remove %1$s ?</string>
 </resources>

@@ -17,10 +17,6 @@ class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
         this.userlist = userl.toMutableList()
         notifyDataSetChanged()
     }
-    fun addUser(user: UserModel) {
-        this.userlist.add(user)
-        notifyDataSetChanged()
-    }
 
     fun setListener(lstnr: ListAdapterListener) {
         this.listener = lstnr
@@ -37,7 +33,7 @@ class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
         val user = userlist[position]
         holder.bind(user)
-        holder.binding.name.setOnLongClickListener { listener.onUserDelete(user) }
+        holder.binding.containerParent.setOnLongClickListener { listener.onUserDelete(user) }
     }
 
     override fun getItemCount(): Int {
