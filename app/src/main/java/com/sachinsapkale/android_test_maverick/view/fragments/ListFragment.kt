@@ -80,10 +80,10 @@ class ListFragment : Fragment(),
     override fun onUserDelete(user: UserModel): Boolean {
 
         val dialogBuilder = AlertDialog.Builder(activity!!)
-        dialogBuilder.setMessage("Do you wish to delete this user?")
-            // if the dialog is cancelable
+        dialogBuilder.setMessage(getString(R.string.are_you_sure))
+            .setTitle(getString(R.string.remove_user,user.name))
             .setCancelable(true)
-            .setPositiveButton("Yes", DialogInterface.OnClickListener {
+            .setPositiveButton("OK", DialogInterface.OnClickListener {
                     dialog, id ->
                 dialog.dismiss()
                 viewModel.deleteUser(BuildConfig.ACCESS_TOKEN,user)
