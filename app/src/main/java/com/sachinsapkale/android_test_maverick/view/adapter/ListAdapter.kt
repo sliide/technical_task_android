@@ -10,11 +10,15 @@ import com.sachinsapkale.android_test_maverick.databinding.AdapterListBinding
 
 class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
-    var movieList = mutableListOf<UserModel>()
+    var userlist = mutableListOf<UserModel>()
     private lateinit var listener: ListAdapterListener
 
-    fun setUser(movies: List<UserModel>) {
-        this.movieList = movies.toMutableList()
+    fun setUser(userl: List<UserModel>) {
+        this.userlist = userl.toMutableList()
+        notifyDataSetChanged()
+    }
+    fun addUser(user: UserModel) {
+        this.userlist.add(user)
         notifyDataSetChanged()
     }
 
@@ -31,16 +35,17 @@ class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
 
-        val movie = movieList[position]
-        holder.bind(movie)
+        val user = userlist[position]
+        holder.bind(user)
+        holder.binding.name.setOnLongClickListener { listener.onUserDelete(user) }
     }
 
     override fun getItemCount(): Int {
-        return movieList.size
+        return userlist.size
     }
 
     interface ListAdapterListener{
-        fun onUserDelete(user: UserModel)
+        fun onUserDelete(user: UserModel): Boolean // adding a return type becoz onclick from xml requires a return type
     }
 }
 

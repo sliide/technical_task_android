@@ -85,11 +85,11 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_dark_background"
-        android:textColor="@color/white"
-        android:text="Save"
+        android:textColor="@color/black"
+        android:text="@string/btnsave"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genderRg"/>
+        app:layout_constraintTop_toBottomOf="@+id/genderRg"
+        android:id="@+id/saveBtn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

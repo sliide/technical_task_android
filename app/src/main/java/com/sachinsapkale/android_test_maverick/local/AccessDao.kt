@@ -1,9 +1,6 @@
 package com.android_test_maverick.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.android_test_maverick.UserModel
 import retrofit2.http.DELETE
 
@@ -19,6 +16,6 @@ interface AccessDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: UserModel)
 
-    @DELETE
+    @Delete
     fun deleteUser(user: UserModel)
 }

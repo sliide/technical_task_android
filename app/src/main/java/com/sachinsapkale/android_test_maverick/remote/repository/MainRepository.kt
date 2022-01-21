@@ -1,5 +1,6 @@
 package com.android_test_maverick.remote.repository
 
+import com.android_test_maverick.UserModel
 import com.android_test_maverick.remote.RetrofitService
 import javax.inject.Inject
 
@@ -7,7 +8,7 @@ class MainRepository @Inject constructor(private val retrofitService: RetrofitSe
 
     suspend fun getSearchList(pageNumber : Int) = retrofitService.getSearchList(pageNumber)
 
-    suspend fun createNewUser(token : String) = retrofitService.createNewUser(token)
+    suspend fun createNewUser(token : String,user: UserModel) = retrofitService.createNewUser(token,user)
 
     suspend fun deleteUser(userId: Int,token : String) = retrofitService.deleteUser(userId,token)
 

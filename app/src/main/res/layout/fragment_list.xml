@@ -5,6 +5,7 @@
         <variable
             name="myAdapter"
             type="com.android_test_maverick.view.ListAdapter" />
+
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -22,17 +23,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/btnAddUser"
             app:layout_constraintHorizontal_bias="0"
             android:id="@+id/labelTV"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:text="@string/add_user"
             android:textStyle="bold|italic"
-            android:background="null"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

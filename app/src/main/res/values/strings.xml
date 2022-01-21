@@ -14,4 +14,9 @@
     <string name="user_deleted">%1$s , Deleted Successfully</string>
     <string name="label_user_list">User List from last page</string>
     <string name="add_user">Add User +</string>
+    <string name="btnsave">SAVE</string>
+    <string name="empty_name">Name cannot be empty</string>
+    <string name="empty_email">Email cannot be empty</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="invalid_gender">Choose one gender option</string>
 </resources>

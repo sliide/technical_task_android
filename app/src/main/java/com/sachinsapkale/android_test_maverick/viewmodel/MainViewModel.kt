@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.android_test_maverick.UserModel
 import com.android_test_maverick.local.repository.LocalRepository
 import com.android_test_maverick.remote.repository.MainRepository
+import com.sachinsapkale.android_test_maverick.BuildConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -66,10 +67,10 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     fun createNewUser(token : String,user: UserModel) {
         loading.value = true
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = mainRepository.createNewUser(token)
+            val response = mainRepository.createNewUser(token,user)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful && response.code() == 201) {
-                    insertUserInDB(user)
+                    insertUserInDB(response.body()!!.data)
                 } else {
                     onError("Error : ${response.message()} ")
                 }
@@ -95,7 +96,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     fun deleteUser(token : String,user: UserModel) {
         loading.value = true
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = mainRepository.deleteUser(user.id)
+            val response = mainRepository.deleteUser(user.id,BuildConfig.ACCESS_TOKEN)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful && response.code() == 204) {
                     deletetUserFromDB(user)
