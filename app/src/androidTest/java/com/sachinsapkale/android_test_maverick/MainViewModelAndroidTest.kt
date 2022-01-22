@@ -55,7 +55,7 @@ class MainViewModelAndroidTest {
 
     @Test
     fun testGetUserApi() {
-        viewModel.getLastPageNumbner(1) // adding default pagenumber
+        viewModel.getUserListFromPage(1) // adding default pagenumber
         val valuelist = viewModel.userList.getOrAwaitValue().get(0)
         assertNotNull(valuelist)
     }
