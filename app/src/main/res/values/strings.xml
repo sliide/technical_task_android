@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Maverick</string>
     <string name="list_fragment">list_fragment</string>
     <string name="detail_fragment">detail_fragment</string>
     <string name="create_user_label">Create New User</string>

@@ -23,14 +23,14 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     }
     val loading = MutableLiveData<Boolean>()
 
-    fun getLastPageNumbner(pageNumber : Int) {
+    fun getUserListFromPage(pageNumber : Int) { // writing 2 network call within single coroutine job as they are interdependent
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val findPLastPage = mainRepository.getSearchList(pageNumber)
+            val findPLastPage = mainRepository.getUserListFromLastPage(pageNumber)
             val page = findPLastPage.body()!!.meta.pagination.pages
-            val response = mainRepository.getSearchList(page)
+            val response = mainRepository.getUserListFromLastPage(page)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    getSearchListFromDB(response.body()!!.data)
+                    getUserListFromDB(response.body()!!.data)
                 } else {
                     onError("Error : ${response.message()} ")
                 }
@@ -49,7 +49,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         job?.cancel()
     }
 
-    fun getSearchListFromDB(list: List<UserModel>) {
+    fun getUserListFromDB(list: List<UserModel>) {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val insertinDb = localRepository.insertUserListInDB(list)
             val insertedInList = localRepository.getAllItemsInDB()

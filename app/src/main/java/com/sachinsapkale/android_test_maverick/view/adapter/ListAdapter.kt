@@ -48,6 +48,6 @@ class MainViewHolder(val binding: AdapterListBinding) : RecyclerView.ViewHolder(
     fun bind(obj: UserModel,listener: ListAdapter.ListAdapterListener) {
         binding.setVariable(BR.itemViewModel,obj)
         binding.executePendingBindings()
-        binding.containerParent.setOnClickListener { listener.onUserDelete(obj) }
+        binding.containerParent.setOnLongClickListener { listener.onUserDelete(obj) }
     }
 }

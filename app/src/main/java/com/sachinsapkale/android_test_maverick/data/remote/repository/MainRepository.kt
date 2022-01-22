@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val retrofitService: RetrofitService) {
 
-    suspend fun getSearchList(pageNumber : Int) = retrofitService.getSearchList(pageNumber)
+    suspend fun getUserListFromLastPage(pageNumber : Int) = retrofitService.getUserListFromLastPage(pageNumber)
 
     suspend fun createNewUser(token : String,user: UserModel) = retrofitService.createNewUser(token,user)
 

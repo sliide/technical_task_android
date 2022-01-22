@@ -63,7 +63,7 @@ class ListFragment : Fragment(),
             }
         })
 
-        viewModel.getLastPageNumbner(deafultPageNumber)
+        viewModel.getUserListFromPage(deafultPageNumber)
         binding?.btnAddUser?.setOnClickListener{ clickAddNewUser() }
 
     }
@@ -71,7 +71,7 @@ class ListFragment : Fragment(),
     override fun onNewUserClicked(user: UserModel) {
         viewModel.createNewUser(BuildConfig.ACCESS_TOKEN,user)
         viewModel.singleUser.observe(viewLifecycleOwner, {
-            viewModel.getLastPageNumbner(deafultPageNumber)
+            viewModel.getUserListFromPage(deafultPageNumber)
         })
     }
 
@@ -86,7 +86,7 @@ class ListFragment : Fragment(),
                 dialog.dismiss()
                 viewModel.deleteUser(BuildConfig.ACCESS_TOKEN,user)
                 viewModel.deleteUser.observe(viewLifecycleOwner, {
-                    viewModel.getLastPageNumbner(deafultPageNumber)
+                    viewModel.getUserListFromPage(deafultPageNumber)
                 })
 
                 viewModel.errorMessage.observe(viewLifecycleOwner, {

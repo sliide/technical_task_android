@@ -47,14 +47,6 @@ class CreateUserBottomSheetDialogFragment : BottomSheetDialogFragment() {
     fun setUpRequestBody() {
         val name = binding?.enterNameEdTxt?.text.toString()
         val email = binding?.enterEmailEdTxt?.text.toString()
-        val radioButtonID = binding?.genderRg?.checkedRadioButtonId
-        if (radioButtonID == -1) {
-            Toast.makeText(context, getString(R.string.invalid_gender), Toast.LENGTH_SHORT).show()
-            return
-        }
-        val radioButton: RadioButton =
-            binding?.genderRg?.findViewById(radioButtonID!!) as RadioButton
-        val gender = radioButton.text.toString()
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(context, getString(R.string.empty_name), Toast.LENGTH_SHORT).show()
             return
@@ -68,6 +60,15 @@ class CreateUserBottomSheetDialogFragment : BottomSheetDialogFragment() {
             Toast.makeText(context, getString(R.string.invalid_email), Toast.LENGTH_SHORT).show()
             return
         }
+
+        val radioButtonID = binding?.genderRg?.checkedRadioButtonId
+        if (radioButtonID == -1) {
+            Toast.makeText(context, getString(R.string.invalid_gender), Toast.LENGTH_SHORT).show()
+            return
+        }
+        val radioButton: RadioButton =
+            binding?.genderRg?.findViewById(radioButtonID!!) as RadioButton
+        val gender = radioButton.text.toString()
 
         val newUser = UserModel(0, name, email, gender, "active")
 

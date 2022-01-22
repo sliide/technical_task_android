@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface RetrofitService {
 
     @GET("public/v1/users?")
-    suspend fun getSearchList(@Query("page") pageNumber : Int): Response<RootResponse>
+    suspend fun getUserListFromLastPage(@Query("page") pageNumber : Int): Response<RootResponse>
 
     @POST("public/v1/users?")
     suspend fun createNewUser(@Query("access-token") token : String,@Body user: UserModel): Response<CreateUserResponse>

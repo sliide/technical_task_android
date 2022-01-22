@@ -93,12 +93,13 @@ dependencies {
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:2.4.0-rc01"
 
-
+    // Room Database
     def room_version = "2.4.1"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
+    // Hilt test
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
 
@@ -107,6 +108,7 @@ dependencies {
     testImplementation "io.mockk:mockk:$mockk_version"
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
 
+    //Arch Core Testing
     def arch_version = "2.1.0"
     testImplementation "androidx.arch.core:core-testing:$arch_version"
     androidTestImplementation "androidx.arch.core:core-testing:$arch_version"

@@ -68,6 +68,7 @@ class MainViewModelAndroidTest {
     }
 
 // Delete user method will need to get usermodel which needs to be deleted as a user input, thus, commenting this method
+
 //    @Test
 //    fun testDeleteUserApi() {
 //        Log.d("randomemail",randomeEmail)
