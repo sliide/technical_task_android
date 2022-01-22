@@ -1,6 +1,6 @@
 # Sliide Android developer challenge 
 
-Below I'm sharing somehight w.r.t to this task:
+Below I'm sharing some highlight w.r.t to this task:
 
 ####  Note:
 - Not handling error response cases where email already exists or not found (only code 201 & 204 is handled as per requirements)
