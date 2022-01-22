@@ -20,5 +20,5 @@ Below I'm sharing somehight w.r.t to this task:
         - changing the JAVA_HOME environment variable.
         - changing `org.gradle.java.home` in `gradle.properties`.
 
-###Change Gradle JDK
-Goto => AndroidStudio > Preferences > Build Tools > Gradle >  Look for Gradle JDK and Select `Embedded JDK` from dropdown.
+### Change Gradle JDK
+ Goto => AndroidStudio > Preferences > Build Tools > Gradle >  Look for Gradle JDK and Select `Embedded JDK` from dropdown.
