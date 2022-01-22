@@ -28,6 +28,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             val findPLastPage = mainRepository.getUserListFromLastPage(pageNumber)
             val page = findPLastPage.body()!!.meta.pagination.pages
             val response = mainRepository.getUserListFromLastPage(page)
+            val insertinDb = localRepository.insertUserListInDB(response.body()!!.data)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     getUserListFromDB(response.body()!!.data)
@@ -40,8 +41,8 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     }
 
     private fun onError(message: String) {
-        errorMessage.value = message
-        loading.value = false
+        errorMessage.postValue(message)
+        loading.postValue(false)
     }
 
     override fun onCleared() {
@@ -51,12 +52,11 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     fun getUserListFromDB(list: List<UserModel>) {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val insertinDb = localRepository.insertUserListInDB(list)
             val insertedInList = localRepository.getAllItemsInDB()
             withContext(Dispatchers.Main) {
                 if (insertedInList != null && insertedInList.size > 0) {
                     userList.postValue(insertedInList)
-                    loading.value = false
+                    loading.postValue(false)
                 } else {
                     onError("Error : No items found ")
                 }
@@ -65,7 +65,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     }
 
     fun createNewUser(token : String,user: UserModel) {
-        loading.value = true
+        loading.postValue(true)
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = mainRepository.createNewUser(token,user)
             withContext(Dispatchers.Main) {
@@ -85,7 +85,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             withContext(Dispatchers.Main) {
                 if (insertinDb != null) {
                     singleUser.postValue(user)
-                    loading.value = false
+                    loading.postValue(false)
                 } else {
                     onError("Error : No items found ")
                 }
@@ -94,7 +94,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     }
 
     fun deleteUser(token : String,user: UserModel) {
-        loading.value = true
+        loading.postValue(true)
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = mainRepository.deleteUser(user.id,BuildConfig.ACCESS_TOKEN)
             withContext(Dispatchers.Main) {
@@ -114,7 +114,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             withContext(Dispatchers.Main) {
                 if (insertinDb != null) {
                     deleteUser.postValue(user)
-                    loading.value = false
+                    loading.postValue(false)
                 } else {
                     onError("Error : No items found ")
                 }
