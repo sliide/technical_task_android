@@ -20,7 +20,6 @@ class RemoteDataSource @Inject constructor() {
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
 
-        println("---retorift")
         retrofit = builder.build()
     }
 
@@ -33,17 +32,14 @@ class RemoteDataSource @Inject constructor() {
                     synchronized(RemoteDataSource::class.java) {
                         if (self == null) {
                             self = RemoteDataSource()
-                            println("---once new")
                         }
                     }
                 }
-                println("---once")
                 return self!!
             }
     }
 
-    fun destroyInstance(){
+    fun destroyInstance(){ // releasing instance for Garbage collector
         self = null
-        println("---instance released---")
     }
 }

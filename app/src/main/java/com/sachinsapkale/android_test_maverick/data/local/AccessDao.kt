@@ -2,7 +2,6 @@ package com.android_test_maverick.local
 
 import androidx.room.*
 import com.android_test_maverick.UserModel
-import retrofit2.http.DELETE
 
 @Dao
 interface AccessDao {

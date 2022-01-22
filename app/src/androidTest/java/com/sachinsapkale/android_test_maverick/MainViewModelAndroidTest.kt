@@ -1,7 +1,6 @@
 package com.sachinsapkale.android_test_maverick
 
 import android.content.Context
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -68,7 +67,7 @@ class MainViewModelAndroidTest {
         assertEquals(valuelist.email,randomeEmail)
     }
 
-// Delete user method will to get usermodel which needs to be delete as a user input this, commenting this method
+// Delete user method will need to get usermodel which needs to be deleted as a user input, thus, commenting this method
 //    @Test
 //    fun testDeleteUserApi() {
 //        Log.d("randomemail",randomeEmail)
