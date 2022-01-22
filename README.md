@@ -7,7 +7,7 @@ Below I'm sharing some highlight w.r.t to this task:
 - To show injection of interface between recyclerview and adapter I've avoided using databinding from xml where onclick of view can be binded directly (as an alternate option).
 - Removed MyViewModelFactory (ViewModelProvider.Factory) class as we are using @HiltViewModel
 - Using Collections class to reverse latest added user at top as response is sorted inversely.
-- To show db integration i've used roomdatabase. The purpose is to fetch data from api, store in db , fetch from db and populate in UI for user.
+- To show db integration i've used roomdatabase. The purpose is to fetch data from api, store in db , fetch from db and populate in UI for user. No offline supports as add/create user won't be meaningful.
 - Due to above, add / delete livedata can emit more than once as there are operation's on remote and local data source both together.
 
 #### Fix incase you get plugin error (like below):
