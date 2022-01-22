@@ -12,6 +12,7 @@ import com.android_test_maverick.UserModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sachinsapkale.android_test_maverick.R
 import com.sachinsapkale.android_test_maverick.databinding.FragmentCreateUserBinding
+import com.what3words.lib.isEmailValid
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,7 +65,7 @@ class CreateUserBottomSheetDialogFragment : BottomSheetDialogFragment() {
             return
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!email.isEmailValid()) {
             Toast.makeText(context, getString(R.string.invalid_email), Toast.LENGTH_SHORT).show()
             return
         }

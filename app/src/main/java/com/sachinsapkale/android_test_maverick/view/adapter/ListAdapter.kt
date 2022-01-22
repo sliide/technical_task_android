@@ -32,8 +32,7 @@ class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
 
         val user = userlist[position]
-        holder.bind(user)
-        holder.binding.containerParent.setOnLongClickListener { listener.onUserDelete(user) }
+        holder.bind(user,listener)
     }
 
     override fun getItemCount(): Int {
@@ -46,8 +45,9 @@ class ListAdapter : RecyclerView.Adapter<MainViewHolder>() {
 }
 
 class MainViewHolder(val binding: AdapterListBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(obj: Any?) {
+    fun bind(obj: UserModel,listener: ListAdapter.ListAdapterListener) {
         binding.setVariable(BR.itemViewModel,obj)
         binding.executePendingBindings()
+        binding.containerParent.setOnClickListener { listener.onUserDelete(obj) }
     }
 }
