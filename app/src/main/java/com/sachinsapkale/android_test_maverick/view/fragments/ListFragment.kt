@@ -16,6 +16,7 @@ import com.sachin_sapkale_android_challenge.viewmodel.MainViewModel
 import com.sachinsapkale.android_test_maverick.BuildConfig
 import com.sachinsapkale.android_test_maverick.R
 import com.sachinsapkale.android_test_maverick.databinding.FragmentListBinding
+import com.sachinsapkale.android_test_maverick.utils.isNetworkAvailable
 import com.sachinsapkale.android_test_maverick.view.fragments.CreateUserBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -62,6 +63,12 @@ class ListFragment : Fragment(),
                 binding?.let { it.progressDialog.visibility = View.GONE }
             }
         })
+
+        if(!isNetworkAvailable(context)){
+            viewModel.loading.postValue(false)
+            viewModel.errorMessage.postValue(getString(R.string.error_connection))
+            return
+        }
 
         viewModel.getUserListFromPage(deafultPageNumber)
         binding?.btnAddUser?.setOnClickListener{ clickAddNewUser() }
