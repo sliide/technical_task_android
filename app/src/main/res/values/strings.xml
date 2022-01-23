@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Maverick</string>
+    <string name="list_fragment">list_fragment</string>
+    <string name="detail_fragment">detail_fragment</string>
+    <string name="create_user_label">Create New User</string>
+    <string name="create_user_sublabel">Enter the details below to create a new user and click on \'Save\'</string>
+    <string name="hint_name">enter name</string>
+    <string name="hint_email">enter email</string>
+    <string name="label_gender">Select gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="user_added">%1$s , Added Successfully</string>
+    <string name="user_deleted">%1$s , Deleted Successfully</string>
+    <string name="label_user_list">User List from last page</string>
+    <string name="add_user">Add User +</string>
+    <string name="btnsave">SAVE</string>
+    <string name="empty_name">Name cannot be empty</string>
+    <string name="empty_email">Email cannot be empty</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="invalid_gender">Choose one gender option</string>
+    <string name="are_you_sure">Are you sure you want to remove this user?</string>
+    <string name="remove_user">Remove %1$s ?</string>
+    <string name="error_connection">Check your internet connection</string>
+</resources>

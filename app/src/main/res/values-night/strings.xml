@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_user_label">Create New User</string>
+    <string name="create_user_sublabel">Enter the details below to create a new user and click on \'Save\'</string>
+    <string name="hint_name">enter name</string>
+    <string name="hint_email">enter email</string>
+    <string name="label_gender">Select gender</string>
+</resources>

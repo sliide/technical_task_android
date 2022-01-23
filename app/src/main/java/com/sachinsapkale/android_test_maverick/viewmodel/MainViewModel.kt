@@ -1,0 +1,125 @@
+package com.sachin_sapkale_android_challenge.viewmodel
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.android_test_maverick.UserModel
+import com.android_test_maverick.local.repository.LocalRepository
+import com.android_test_maverick.remote.repository.MainRepository
+import com.sachinsapkale.android_test_maverick.BuildConfig
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.*
+import javax.inject.Inject
+
+@HiltViewModel
+class MainViewModel @Inject constructor(private val mainRepository: MainRepository, private val localRepository: LocalRepository) : ViewModel() {
+
+    val errorMessage = MutableLiveData<String>()
+    val userList = MutableLiveData<List<UserModel>>()
+    val singleUser = MutableLiveData<UserModel>()
+    val deleteUser = MutableLiveData<UserModel>()
+    var job: Job? = null
+    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        onError("Exception handled: ${throwable.localizedMessage}")
+    }
+    val loading = MutableLiveData<Boolean>()
+
+    fun getUserListFromPage(pageNumber : Int) { // writing 2 network call within single coroutine job as they are interdependent
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val findPLastPage = mainRepository.getUserListFromLastPage(pageNumber)
+            val page = findPLastPage.body()!!.meta.pagination.pages
+            val response = mainRepository.getUserListFromLastPage(page)
+            val insertinDb = localRepository.insertUserListInDB(response.body()!!.data)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    getUserListFromDB(response.body()!!.data)
+                } else {
+                    onError("Error : ${response.message()} ")
+                }
+            }
+        }
+
+    }
+
+    private fun onError(message: String) {
+        errorMessage.postValue(message)
+        loading.postValue(false)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
+    }
+
+    fun getUserListFromDB(list: List<UserModel>) {
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val insertedInList = localRepository.getAllItemsInDB()
+            withContext(Dispatchers.Main) {
+                if (insertedInList != null && insertedInList.size > 0) {
+                    userList.postValue(insertedInList)
+                    loading.postValue(false)
+                } else {
+                    onError("Error : No items found ")
+                }
+            }
+        }
+    }
+
+    fun createNewUser(token : String,user: UserModel) {
+        loading.postValue(true)
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = mainRepository.createNewUser(token,user)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful && response.code() == 201) {
+                    insertUserInDB(response.body()!!.data)
+                } else {
+                    onError("Error : ${response.message()} ")
+                }
+            }
+        }
+
+    }
+
+    fun insertUserInDB(user: UserModel) {
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val insertinDb = localRepository.insertSingleUserInDB(user)
+            withContext(Dispatchers.Main) {
+                if (insertinDb != null) {
+                    singleUser.postValue(user)
+                    loading.postValue(false)
+                } else {
+                    onError("Error : No items found ")
+                }
+            }
+        }
+    }
+
+    fun deleteUser(token : String,user: UserModel) {
+        loading.postValue(true)
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = mainRepository.deleteUser(user.id,BuildConfig.ACCESS_TOKEN)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful && response.code() == 204) {
+                    deletetUserFromDB(user)
+                } else {
+                    onError("Error : ${response.message()} ")
+                }
+            }
+        }
+
+    }
+
+    fun deletetUserFromDB(user: UserModel) {
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val insertinDb = localRepository.deleteUserFromDB(user)
+            withContext(Dispatchers.Main) {
+                if (insertinDb != null) {
+                    deleteUser.postValue(user)
+                    loading.postValue(false)
+                } else {
+                    onError("Error : No items found ")
+                }
+            }
+        }
+    }
+
+}
