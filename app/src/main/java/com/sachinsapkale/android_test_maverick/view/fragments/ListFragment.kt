@@ -47,7 +47,6 @@ class ListFragment : Fragment(),
         binding?.myAdapter = adapter
 
         viewModel.userList.observe(viewLifecycleOwner, {
-            Collections.reverse(it)
             adapter.setListener(this)
             adapter.setUser(it)
         })

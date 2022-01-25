@@ -6,7 +6,7 @@ import com.android_test_maverick.UserModel
 @Dao
 interface AccessDao {
 
-    @Query("SELECT * FROM itemsTable")
+    @Query("SELECT * FROM itemsTable order by id desc")
     fun getAllItems(): List<UserModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
