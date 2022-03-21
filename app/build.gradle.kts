@@ -4,6 +4,11 @@ plugins {
     id("kotlin-kapt")
 }
 
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
+
 android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
@@ -59,4 +64,7 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
 
     debugImplementation(libs.leak.canary)
+
+    implementation(libs.dagger.runtime)
+    kapt(libs.dagger.compiler)
 }

@@ -23,4 +23,6 @@ android {
 
 dependencies {
     implementation(projects.boundary)
+
+    implementation(libs.inject)
 }

@@ -11,4 +11,6 @@ java {
 dependencies {
     implementation(projects.interactor)
     implementation(projects.boundary)
+
+    implementation(libs.inject)
 }

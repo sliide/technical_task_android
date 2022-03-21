@@ -16,6 +16,9 @@ compose = "1.1.1"
 
 leak-canary = "2.8.1"
 
+dagger = "2.41"
+inject = "1"
+
 [libraries]
 kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-tools = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
@@ -32,6 +35,10 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", versi
 google-accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "google-accompanist" }
 
 leak-canary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leak-canary" }
+
+dagger-runtime = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+inject = { module = "javax.inject:javax.inject", version.ref = "inject" }
 
 [bundles]
 androidx-compose = [

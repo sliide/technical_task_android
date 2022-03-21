@@ -31,4 +31,6 @@ dependencies {
 
     implementation(libs.bundles.androidx.compose)
     debugImplementation(libs.bundles.androidx.compose.tooling)
+
+    implementation(libs.inject)
 }
