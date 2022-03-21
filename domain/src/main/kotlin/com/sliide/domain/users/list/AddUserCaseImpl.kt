@@ -2,8 +2,8 @@ package com.sliide.domain.users.list
 
 import com.sliide.boundary.users.FieldsProblem
 import com.sliide.boundary.users.UsersRepo
-import com.sliide.interactor.users.list.AddUserResult
-import com.sliide.interactor.users.list.AddUserResult.*
+import com.sliide.interactor.users.list.AddResult
+import com.sliide.interactor.users.list.AddResult.*
 import javax.inject.Inject
 
 class AddUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) : AddUserCase {
@@ -14,7 +14,7 @@ class AddUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) : Ad
         private const val EMAIL_TAKEN = "has already been taken"
     }
 
-    override suspend fun addUser(name: String, email: String): AddUserResult {
+    override suspend fun addUser(name: String, email: String): AddResult {
         return try {
             val user = usersRepo.create(name, email)
             Created(user.toUserItem())

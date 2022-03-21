@@ -1,7 +1,7 @@
 package com.sliide.domain.users.list
 
-import com.sliide.interactor.users.list.AddUserResult
-import com.sliide.interactor.users.list.DeleteUserResult
+import com.sliide.interactor.users.list.AddResult
+import com.sliide.interactor.users.list.DeleteResult
 import com.sliide.interactor.users.list.UserListInteractor
 import javax.inject.Inject
 
@@ -10,11 +10,11 @@ class UserListInteractorImpl @Inject constructor(
     private val deleteUser: DeleteUserCase
 ) : UserListInteractor {
 
-    override suspend fun addNewUser(name: String, email: String): AddUserResult {
+    override suspend fun addNewUser(name: String, email: String): AddResult {
         return addUser.addUser(name, email)
     }
 
-    override suspend fun deleteUser(userId: Int): DeleteUserResult {
+    override suspend fun deleteUser(userId: Int): DeleteResult {
         return deleteUser.deleteUser(userId)
     }
 }

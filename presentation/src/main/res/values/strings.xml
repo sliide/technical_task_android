@@ -16,4 +16,5 @@
     <string name="email_already_taken">Your email has already been taken</string>
     <string name="hide">Hide</string>
     <string name="ok">OK</string>
+    <string name="user_added">User is added</string>
 </resources>

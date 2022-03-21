@@ -3,8 +3,8 @@ package com.sliide.presentation.users.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.sliide.interactor.users.list.AddUserResult
-import com.sliide.interactor.users.list.DeleteUserResult
+import com.sliide.interactor.users.list.AddResult
+import com.sliide.interactor.users.list.DeleteResult
 import com.sliide.interactor.users.list.UserItem
 import com.sliide.interactor.users.list.UserListInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +21,8 @@ class UserListViewModel @Inject constructor(
     private val mutableDialog = MutableStateFlow<Dialogs>(Dialogs.None)
     internal val dialog: StateFlow<Dialogs> = mutableDialog
 
-    private val mutableError = MutableStateFlow(Error.NONE)
-    internal val error: StateFlow<Error> = mutableError
+    private val mutableMessage = MutableStateFlow(Message.NONE)
+    internal val message: StateFlow<Message> = mutableMessage
 
     private val modificationEvents = MutableStateFlow<List<UserItemEvents>>(emptyList())
 
@@ -45,10 +45,13 @@ class UserListViewModel @Inject constructor(
             mutableDialog.value = Dialogs.None
 
             when (val result = interactor.addNewUser(name, email)) {
-                is AddUserResult.Created -> modificationEvents.value += UserItemEvents.Add(result.user)
-                AddUserResult.FieldsError -> mutableError.value = Error.CHECK_FIELDS
-                is AddUserResult.UnknownError -> mutableError.value = Error.UNKNOWN
-                is AddUserResult.EmailAlreadyTaken -> mutableError.value = Error.EMAIL_ALREADY_TAKEN
+                AddResult.FieldsError -> mutableMessage.value = Message.CHECK_FIELDS
+                is AddResult.UnknownError -> mutableMessage.value = Message.UNKNOWN
+                is AddResult.EmailAlreadyTaken -> mutableMessage.value = Message.EMAIL_ALREADY_TAKEN
+                is AddResult.Created -> {
+                    modificationEvents.value += UserItemEvents.Add(result.user)
+                    mutableMessage.value = Message.USER_ADDED
+                }
             }
         }
     }
@@ -58,8 +61,8 @@ class UserListViewModel @Inject constructor(
 
         viewModelScope.launch {
             when (interactor.deleteUser(userId)) {
-                DeleteUserResult.Deleted -> modificationEvents.value += UserItemEvents.Remove(userId)
-                is DeleteUserResult.UnknownError -> mutableError.value = Error.UNKNOWN
+                DeleteResult.Deleted -> modificationEvents.value += UserItemEvents.Remove(userId)
+                is DeleteResult.UnknownError -> mutableMessage.value = Message.UNKNOWN
             }
         }
     }
@@ -77,10 +80,10 @@ class UserListViewModel @Inject constructor(
     }
 
     internal fun loadListError() {
-        mutableError.value = Error.LOADING_LIST_FAILURE
+        mutableMessage.value = Message.LOADING_LIST_FAILURE
     }
 
-    internal fun onErrorSnackAction() {
-        mutableError.value = Error.NONE
+    internal fun onSnackAction() {
+        mutableMessage.value = Message.NONE
     }
 }

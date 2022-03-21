@@ -1,17 +1,17 @@
 package com.sliide.domain.users.list
 
 import com.sliide.boundary.users.UsersRepo
-import com.sliide.interactor.users.list.DeleteUserResult
+import com.sliide.interactor.users.list.DeleteResult
 import javax.inject.Inject
 
 class DeleteUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) : DeleteUserCase {
 
-    override suspend fun deleteUser(userId: Int): DeleteUserResult {
+    override suspend fun deleteUser(userId: Int): DeleteResult {
         return try {
             usersRepo.delete(userId)
-            DeleteUserResult.Deleted
+            DeleteResult.Deleted
         } catch (ex: Exception) {
-            DeleteUserResult.UnknownError(ex)
+            DeleteResult.UnknownError(ex)
         }
     }
 }

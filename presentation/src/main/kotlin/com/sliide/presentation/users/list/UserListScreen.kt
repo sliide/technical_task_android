@@ -37,8 +37,8 @@ fun UserListScreen(viewModel: UserListViewModel, showDialog: @Composable (Dialog
     val dialog by viewModel.dialog.collectAsState()
     if (dialog != Dialogs.None) showDialog(dialog)
 
-    val error by viewModel.error.collectAsState()
-    val message = error.toErrorString(LocalContext.current.resources)
+    val message by viewModel.message.collectAsState()
+    val messageText = message.toErrorString(LocalContext.current.resources)
 
     val items = viewModel.items.collectAsLazyPagingItems()
 
@@ -47,15 +47,22 @@ fun UserListScreen(viewModel: UserListViewModel, showDialog: @Composable (Dialog
         is LoadState.Error -> viewModel.loadListError()
 
         is LoadState.NotLoading -> ScaffoldHideFabByScroll(
-            fab = { modifier -> if (message.isEmpty()) Fab(modifier) { viewModel.onFabClick() } },
+            fab = { modifier -> if (messageText.isEmpty()) Fab(modifier) { viewModel.onFabClick() } },
             snackBarHost = {
-                if (message.isNotEmpty())
+                if (messageText.isNotEmpty()) {
+                    val duration = when (message) {
+                        Message.USER_ADDED -> SnackbarDuration.Short
+                        else -> SnackbarDuration.Indefinite
+                    }
+
                     SnackMessage(
-                        message = message,
+                        message = messageText,
                         actionLabel = stringResource(R.string.ok),
-                        duration = SnackbarDuration.Indefinite,
-                        action = { viewModel.onErrorSnackAction() }
+                        duration = duration,
+                        action = { viewModel.onSnackAction() },
+                        dismissed = { viewModel.onSnackAction() }
                     )
+                }
             }
         ) {
             UsersList(pagingItems = items) { item -> viewModel.onItemLongClick(item) }

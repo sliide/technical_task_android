@@ -2,7 +2,7 @@ package com.sliide.interactor.users.list
 
 interface UserListInteractor {
 
-    suspend fun addNewUser(name: String, email: String): AddUserResult
+    suspend fun addNewUser(name: String, email: String): AddResult
 
-    suspend fun deleteUser(userId: Int): DeleteUserResult
+    suspend fun deleteUser(userId: Int): DeleteResult
 }
