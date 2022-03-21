@@ -1,10 +1,9 @@
-package com.sliide.domain.users
+package com.sliide.domain.users.list
 
 import com.sliide.boundary.users.FieldsProblem
 import com.sliide.boundary.users.UsersRepo
-import com.sliide.domain.users.list.toUserItem
-import com.sliide.interactor.users.AddUserResult
-import com.sliide.interactor.users.AddUserResult.*
+import com.sliide.interactor.users.list.AddUserResult
+import com.sliide.interactor.users.list.AddUserResult.*
 import javax.inject.Inject
 
 class AddUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) : AddUserCase {

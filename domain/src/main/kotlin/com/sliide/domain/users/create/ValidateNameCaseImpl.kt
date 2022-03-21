@@ -1,6 +1,6 @@
-package com.sliide.domain.users
+package com.sliide.domain.users.create
 
-import com.sliide.interactor.users.NameErrors
+import com.sliide.interactor.users.create.NameErrors
 import javax.inject.Inject
 
 class ValidateNameCaseImpl @Inject constructor() : ValidateNameCase {

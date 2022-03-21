@@ -1,6 +1,6 @@
-package com.sliide.domain.users
+package com.sliide.domain.users.create
 
-import com.sliide.interactor.users.EmailErrors
+import com.sliide.interactor.users.create.EmailErrors
 import java.util.regex.Pattern
 import javax.inject.Inject
 

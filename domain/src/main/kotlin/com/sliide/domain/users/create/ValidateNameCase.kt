@@ -1,6 +1,6 @@
-package com.sliide.domain.users
+package com.sliide.domain.users.create
 
-import com.sliide.interactor.users.NameErrors
+import com.sliide.interactor.users.create.NameErrors
 
 interface ValidateNameCase {
 

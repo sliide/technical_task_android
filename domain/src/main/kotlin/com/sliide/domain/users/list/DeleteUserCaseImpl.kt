@@ -1,7 +1,7 @@
-package com.sliide.domain.users
+package com.sliide.domain.users.list
 
 import com.sliide.boundary.users.UsersRepo
-import com.sliide.interactor.users.DeleteUserResult
+import com.sliide.interactor.users.list.DeleteUserResult
 import javax.inject.Inject
 
 class DeleteUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) : DeleteUserCase {

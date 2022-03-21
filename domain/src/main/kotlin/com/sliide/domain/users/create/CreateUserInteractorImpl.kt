@@ -1,7 +1,5 @@
 package com.sliide.domain.users.create
 
-import com.sliide.domain.users.ValidateEmailCase
-import com.sliide.domain.users.ValidateNameCase
 import com.sliide.interactor.users.create.CreateUserInteractor
 import com.sliide.interactor.users.create.EmailErrors
 import com.sliide.interactor.users.create.NameErrors

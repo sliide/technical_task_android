@@ -1,7 +1,5 @@
 package com.sliide.domain.users.list
 
-import com.sliide.domain.users.AddUserCase
-import com.sliide.domain.users.DeleteUserCase
 import com.sliide.interactor.users.list.AddUserResult
 import com.sliide.interactor.users.list.DeleteUserResult
 import com.sliide.interactor.users.list.UserListInteractor

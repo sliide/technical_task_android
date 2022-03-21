@@ -1,6 +1,6 @@
-package com.sliide.domain.users
+package com.sliide.domain.users.list
 
-import com.sliide.interactor.users.AddUserResult
+import com.sliide.interactor.users.list.AddUserResult
 
 interface AddUserCase {
 
