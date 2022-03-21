@@ -2,10 +2,7 @@ package com.sliide.presentation.users.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,6 +10,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -39,9 +37,9 @@ fun UserListScreen(viewModel: UserListViewModel, showDialog: @Composable (Dialog
 
     val items = viewModel.items.collectAsLazyPagingItems()
 
-    when (items.loadState.source.refresh) {
+    when (val state = items.loadState.source.refresh) {
         LoadState.Loading -> FullScreenProgress()
-        is LoadState.Error -> TODO()
+        is LoadState.Error -> viewModel.loadListError(state.error)
 
         is LoadState.NotLoading -> ScaffoldHideFabByScroll(
             fab = { modifier -> Fab(modifier) { viewModel.onFabClick() } }
@@ -67,7 +65,10 @@ private fun Fab(modifier: Modifier, onClick: () -> Unit) {
 }
 
 @Composable
-private fun UsersList(pagingItems: LazyPagingItems<UserItem>, onItemLongClick: (UserItem) -> Unit) {
+private fun UsersList(
+    pagingItems: LazyPagingItems<UserItem>,
+    onItemLongClick: (UserItem) -> Unit
+) {
     LazyColumn(
         contentPadding = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.systemBars,
@@ -76,7 +77,14 @@ private fun UsersList(pagingItems: LazyPagingItems<UserItem>, onItemLongClick: (
         )
     ) {
         itemsIndexed(items = pagingItems, key = { _, item -> item.id }) { _, item ->
-            UserItem(item = requireNotNull(item)) { onItemLongClick(item) }
+            if (item != null) UserItem(item = item) { onItemLongClick(item) }
+        }
+
+        when (pagingItems.loadState.append) {
+            LoadState.Loading -> item { PageLoadingProgress() }
+            is LoadState.Error -> item { PageLoadingError() }
+            is LoadState.NotLoading -> { // ignore it. when is using for exhausted feature
+            }
         }
     }
 }
@@ -115,4 +123,25 @@ private fun UserItem(item: UserItem, onLongClick: () -> Unit) {
             }
         }
     }
+}
+
+@Composable
+private fun PageLoadingProgress() {
+    CircularProgressIndicator(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentWidth(Alignment.CenterHorizontally)
+    )
+}
+
+@Composable
+private fun PageLoadingError() {
+    Text(
+        modifier = Modifier
+            .padding(all = Dimens.default)
+            .fillMaxWidth()
+            .wrapContentWidth(Alignment.CenterHorizontally),
+        text = stringResource(R.string.loading_list_failed),
+        style = TextStyle(color = MaterialTheme.colors.error)
+    )
 }

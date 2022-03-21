@@ -46,8 +46,8 @@ class UserListViewModel @Inject constructor(
 
             when (val result = interactor.addNewUser(name, email)) {
                 is AddUserResult.Created -> modificationEvents.value += UserItemEvents.Add(result.user)
-                AddUserResult.FieldsError -> mutableErrors.value = Errors.ADD_USER_FIELD
-                AddUserResult.UnknownError -> mutableErrors.value = Errors.UNKNOWN
+                AddUserResult.FieldsError -> mutableErrors.value = Errors.CHECK_FIELDS
+                is AddUserResult.UnknownError -> mutableErrors.value = Errors.UNKNOWN
             }
         }
     }
@@ -58,7 +58,7 @@ class UserListViewModel @Inject constructor(
         viewModelScope.launch {
             when (interactor.deleteUser(userId)) {
                 DeleteUserResult.Deleted -> modificationEvents.value += UserItemEvents.Remove(userId)
-                DeleteUserResult.UnknownError -> mutableErrors.value = Errors.UNKNOWN
+                is DeleteUserResult.UnknownError -> mutableErrors.value = Errors.UNKNOWN
             }
         }
     }
@@ -73,5 +73,9 @@ class UserListViewModel @Inject constructor(
 
     internal fun onFabClick() {
         mutableDialog.value = Dialogs.CreateUser
+    }
+
+    internal fun loadListError(throwable: Throwable) {
+        mutableErrors.value = Errors.LOADING_LIST_FAILURE
     }
 }

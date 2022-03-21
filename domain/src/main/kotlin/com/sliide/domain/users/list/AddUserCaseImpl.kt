@@ -11,6 +11,7 @@ class AddUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) : Ad
     private companion object {
         private const val EMAIL = "email"
         private const val NAME = "name"
+        private const val EMAIL_TAKEN = "has already been taken"
     }
 
     override suspend fun addUser(name: String, email: String): AddUserResult {
@@ -18,8 +19,15 @@ class AddUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) : Ad
             val user = usersRepo.create(name, email)
             Created(user.toUserItem())
         } catch (ex: FieldsProblem) {
-            val fields = ex.fields.keys
-            if (fields.contains(EMAIL) || fields.contains(NAME)) FieldsError else UnknownError(ex)
+            if (ex.fields[EMAIL] == EMAIL_TAKEN) {
+                EmailAlreadyTaken(email)
+
+            } else {
+                val fields = ex.fields.keys
+                if (fields.contains(EMAIL) || fields.contains(NAME)) {
+                    FieldsError
+                } else UnknownError(ex)
+            }
         } catch (ex: Exception) {
             UnknownError(ex)
         }

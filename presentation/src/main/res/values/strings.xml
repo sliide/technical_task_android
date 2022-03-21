@@ -11,6 +11,8 @@
     <string name="field_required">Field can\'t be empty</string>
     <string name="enter_valid_email">Please enter a valid email address</string>
     <string name="unknown_error">An unknown error has occurred. Please, try later</string>
+    <string name="loading_list_failed">We couldn\'t load users. Please, check your network connection or try later</string>
     <string name="users_field_error">There are some problems with your input. Please, check them</string>
+    <string name="email_already_taken_template">Email %s has already been taken</string>
     <string name="hide">Hide</string>
 </resources>

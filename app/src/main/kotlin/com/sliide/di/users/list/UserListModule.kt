@@ -24,10 +24,4 @@ interface UserListModule {
 
     @Binds
     fun bindUserRepo(repoImpl: UsersRepoImpl): UsersRepo
-
-    @Binds
-    fun bindPagingSourceFactory(factory: PagingSourceFactoryImpl): PagingSourceFactory
-
-    @Binds
-    fun bindPagesInteractor(interactor: PagesInteractorImpl): PagesInteractor
 }

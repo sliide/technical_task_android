@@ -2,6 +2,7 @@ package com.sliide.presentation.users.list
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.sliide.interactor.users.list.LoadPageResult
 import com.sliide.interactor.users.list.UserItem
 import com.sliide.interactor.users.list.PagesInteractor
 import javax.inject.Inject
@@ -18,13 +19,17 @@ class PagingSourceFactoryImpl @Inject constructor(
             }
         }
 
-        // TODO handle LoadResult.Error()
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserItem> {
             val page = params.key ?: 1
-            val data = interactor.users(page)
-            val nextKey = if (data.isEmpty()) null else page + 1
-            val prevKey = if (page > 1) page - 1 else null
-            return LoadResult.Page(data, prevKey, nextKey)
+
+            return when (val data = interactor.users(page)) {
+                is LoadPageResult.Loaded -> {
+                    val nextKey = if (data.items.isEmpty()) null else page + 1
+                    val prevKey = if (page > 1) page - 1 else null
+                    LoadResult.Page(data.items, prevKey, nextKey)
+                }
+                is LoadPageResult.UnknownError -> LoadResult.Error(data.throwable)
+            }
         }
     }
 }
