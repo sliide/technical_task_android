@@ -10,6 +10,8 @@ androidx-core = "1.7.0"
 androidx-activity = "1.4.0"
 androidx-lifecycle = "2.4.0"
 androidx-annotation = "1.3.0"
+androix-paging = "3.1.1"
+androix-paging-compose = "1.0.0-alpha14"
 
 google-material = "1.4.0"
 google-accompanist = "0.23.1"
@@ -26,6 +28,10 @@ okhttp3 = "4.9.3"
 
 kotlinx-serialization = "1.3.0"
 kotlinx-coroutines = "1.5.1"
+
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "androix-paging" }
+androidx-paging-common = { module = "androidx.paging:paging-common-ktx", version.ref = "androix-paging" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androix-paging-compose" }
 
 junit4 = "4.13.2"
 mockito-kotlin = "4.0.0"
@@ -62,6 +68,10 @@ kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "androix-paging" }
+androidx-paging-common = { module = "androidx.paging:paging-common-ktx", version.ref = "androix-paging" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androix-paging-compose" }
+
 junit4 = { module = "junit:junit", version.ref = "junit4" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
@@ -83,6 +93,12 @@ retrofit2 = [
     "okhttp3-loggin-interceptor",
     "retrofit2-koltinx-serialization",
     "kotlinx-serialization"
+]
+
+androidx-paging = [
+    "androidx-paging-runtime",
+    "androidx-paging-common",
+    "androidx-paging-compose"
 ]
 
 tests-unit = [

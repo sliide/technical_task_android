@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -18,11 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.sliide.interactor.users.list.UserItem
 import com.sliide.presentation.R
+import com.sliide.presentation.components.FullScreenProgress
 import com.sliide.presentation.components.ScaffoldHideFabByScroll
 import com.sliide.presentation.theme.Dimens
 import com.sliide.presentation.theme.EmailBlue
@@ -33,12 +37,17 @@ fun UserListScreen(viewModel: UserListViewModel, showDialog: @Composable (Dialog
     val dialog by viewModel.dialog.collectAsState()
     if (dialog != Dialogs.None) showDialog(dialog)
 
-    val items by viewModel.items.collectAsState()
+    val items = viewModel.items.collectAsLazyPagingItems()
 
-    ScaffoldHideFabByScroll(
-        fab = { modifier -> Fab(modifier) { viewModel.onFabClick() } }
-    ) {
-        UsersList(items) { item -> viewModel.onItemLongClick(item) }
+    when (items.loadState.source.refresh) {
+        LoadState.Loading -> FullScreenProgress()
+        is LoadState.Error -> TODO()
+
+        is LoadState.NotLoading -> ScaffoldHideFabByScroll(
+            fab = { modifier -> Fab(modifier) { viewModel.onFabClick() } }
+        ) {
+            UsersList(pagingItems = items) { item -> viewModel.onItemLongClick(item) }
+        }
     }
 }
 
@@ -58,7 +67,7 @@ private fun Fab(modifier: Modifier, onClick: () -> Unit) {
 }
 
 @Composable
-private fun UsersList(items: List<UserItem>, onItemLongClick: (UserItem) -> Unit) {
+private fun UsersList(pagingItems: LazyPagingItems<UserItem>, onItemLongClick: (UserItem) -> Unit) {
     LazyColumn(
         contentPadding = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.systemBars,
@@ -66,8 +75,8 @@ private fun UsersList(items: List<UserItem>, onItemLongClick: (UserItem) -> Unit
             applyBottom = true
         )
     ) {
-        itemsIndexed(items = items, key = { _, item -> item.id }) { _, item ->
-            UserItem(item = item) { onItemLongClick(item) }
+        itemsIndexed(items = pagingItems, key = { _, item -> item.id }) { _, item ->
+            UserItem(item = requireNotNull(item)) { onItemLongClick(item) }
         }
     }
 }

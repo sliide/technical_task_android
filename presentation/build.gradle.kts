@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.google.accompanist.insets)
 
     implementation(libs.bundles.androidx.compose)
+    implementation(libs.bundles.androidx.paging)
     debugImplementation(libs.bundles.androidx.compose.tooling)
 
     implementation(libs.inject)

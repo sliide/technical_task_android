@@ -1,5 +1,6 @@
 package com.sliide.interactor.users.list
 
-interface UsersPagesInteractor {
+interface PagesInteractor {
+
     suspend fun users(page: Int): List<UserItem>
 }

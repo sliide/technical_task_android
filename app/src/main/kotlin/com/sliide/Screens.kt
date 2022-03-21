@@ -13,6 +13,7 @@ import com.sliide.presentation.users.list.Dialogs
 import com.sliide.presentation.users.list.UserListScreen
 import com.sliide.presentation.users.list.UserListViewModel
 import com.sliide.presentation.users.remove.ConfirmRemoveScreen
+import java.util.*
 
 @Composable
 internal fun UserListScreen() {
@@ -37,6 +38,7 @@ internal fun UserListScreen() {
                 confirm = { viewModel.removeUser(dialog.userId) },
                 onDismiss = { viewModel.onDismissDialog() }
             )
+
             Dialogs.Progress -> FullScreenProgress()
 
             Dialogs.None -> { // ignore it. when is using for exhausted feature

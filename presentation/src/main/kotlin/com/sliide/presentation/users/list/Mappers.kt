@@ -16,8 +16,8 @@ fun EmailErrors.toErrorString(resources: Resources): String = when (this) {
     EmailErrors.NONE -> ""
 }
 
-fun UsersError.toErrorString(resources: Resources): String = when (this) {
-    UsersError.ADD_USER_FIELD -> resources.getString(R.string.users_field_error)
-    UsersError.UNKNOWN -> resources.getString(R.string.unknown_error)
-    UsersError.NONE -> ""
+fun Errors.toErrorString(resources: Resources): String = when (this) {
+    Errors.ADD_USER_FIELD -> resources.getString(R.string.users_field_error)
+    Errors.UNKNOWN -> resources.getString(R.string.unknown_error)
+    Errors.NONE -> ""
 }

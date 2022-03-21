@@ -2,37 +2,52 @@ package com.sliide.presentation.users.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.*
 import com.sliide.interactor.users.list.AddUserResult
+import com.sliide.interactor.users.list.DeleteUserResult
 import com.sliide.interactor.users.list.UserItem
 import com.sliide.interactor.users.list.UserListInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserListViewModel @Inject constructor(
-    private val interactor: UserListInteractor
+    private val interactor: UserListInteractor,
+    private val pagingSourceFactory: PagingSourceFactory
 ) : ViewModel() {
 
     private val mutableDialog = MutableStateFlow<Dialogs>(Dialogs.None)
     internal val dialog: StateFlow<Dialogs> = mutableDialog
 
-    private val mutableErrors = MutableStateFlow(UsersError.NONE)
-    internal val errors: StateFlow<UsersError> = mutableErrors
+    private val mutableErrors = MutableStateFlow(Errors.NONE)
+    internal val errors: StateFlow<Errors> = mutableErrors
 
-    private val mutableItems = MutableStateFlow(emptyList<UserItem>())
-    internal val items: StateFlow<List<UserItem>> = mutableItems
+    private val modificationEvents = MutableStateFlow<List<UserItemEvents>>(emptyList())
+
+    internal val items = Pager(PagingConfig(pageSize = 20, maxSize = 200)) {
+        pagingSourceFactory.create()
+    }
+        .flow
+        .cachedIn(viewModelScope)
+        .combine(modificationEvents) { pagingData, modifications ->
+            modifications.fold(pagingData) { paging, event ->
+                when (event) {
+                    is UserItemEvents.Add -> paging.insertHeaderItem(item = event.item)
+                    is UserItemEvents.Remove -> paging.filter { item -> event.userId != item.id }
+                }
+            }
+        }
 
     fun addUser(name: String, email: String) {
         viewModelScope.launch {
             mutableDialog.value = Dialogs.None
 
-            when (interactor.addNewUser(name, email)) {
-                is AddUserResult.Created -> {
-                    // TODO
-                }
-                AddUserResult.FieldsError -> mutableErrors.value = UsersError.ADD_USER_FIELD
-                AddUserResult.UnknownError -> mutableErrors.value = UsersError.UNKNOWN
+            when (val result = interactor.addNewUser(name, email)) {
+                is AddUserResult.Created -> modificationEvents.value += UserItemEvents.Add(result.user)
+                AddUserResult.FieldsError -> mutableErrors.value = Errors.ADD_USER_FIELD
+                AddUserResult.UnknownError -> mutableErrors.value = Errors.UNKNOWN
             }
         }
     }
@@ -41,8 +56,10 @@ class UserListViewModel @Inject constructor(
         mutableDialog.value = Dialogs.None
 
         viewModelScope.launch {
-            val result = interactor.deleteUser(userId)
-            // TODO
+            when (interactor.deleteUser(userId)) {
+                DeleteUserResult.Deleted -> modificationEvents.value += UserItemEvents.Remove(userId)
+                DeleteUserResult.UnknownError -> mutableErrors.value = Errors.UNKNOWN
+            }
         }
     }
 
