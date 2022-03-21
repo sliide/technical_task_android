@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_new_user">Add new user</string>
+    <string name="remove_confirmation">Are you sure you want to remove this user?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="save">Save</string>
+    <string name="field_required">Field can\'t be empty</string>
+    <string name="enter_valid_email">Please enter a valid email address</string>
+    <string name="unknown_error">An unknown error has occurred. Please, try later</string>
+    <string name="users_field_error">There are some problems with your input. Please, check them</string>
+    <string name="hide">Hide</string>
+</resources>
