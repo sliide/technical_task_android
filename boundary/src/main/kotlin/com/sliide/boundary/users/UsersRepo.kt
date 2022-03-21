@@ -1,7 +1,5 @@
 package com.sliide.boundary.users
 
-import kotlin.jvm.Throws
-
 interface UsersRepo {
 
     @Throws(LoadPageFailed::class)

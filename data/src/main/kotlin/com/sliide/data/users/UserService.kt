@@ -2,7 +2,6 @@ package com.sliide.data.users
 
 import com.sliide.data.Page
 import com.sliide.data.retrofit.Result
-import retrofit2.Response
 import retrofit2.http.*
 
 interface UserService {
