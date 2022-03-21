@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SliideTheme {
                 ProvideWindowInsets {
-                    Text("Hello")
+                    UserListScreen()
                 }
             }
         }

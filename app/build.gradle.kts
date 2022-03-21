@@ -61,6 +61,8 @@ dependencies {
 
     implementation(libs.google.accompanist.insets)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.activity.compose)
     implementation(libs.bundles.androidx.compose)
 
     debugImplementation(libs.leak.canary)

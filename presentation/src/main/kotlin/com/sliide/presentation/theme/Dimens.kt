@@ -9,10 +9,11 @@ open class Dimens private constructor() {
     val normal = 12.dp
     val default = 16.dp
     val large = 24.dp
-    val extraLarge = 32.dp
 
-    val stroke = 1.dp
     val elevation = 8.dp
+
+    val fabOffset = 144.dp
+    val emailTextSize = 14.sp
 
     companion object : Dimens()
 }
