@@ -13,5 +13,5 @@ interface UserService {
     suspend fun delete(@Path("user_id") @UserId userId: Int): Result<Unit>
 
     @POST("users")
-    suspend fun create(@Body create: CreateUserDto): Result<UserDto>
+    suspend fun create(@Body body: CreateUserDto): Result<UserDto>
 }

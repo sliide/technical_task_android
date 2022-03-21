@@ -13,4 +13,6 @@ dependencies {
     implementation(projects.boundary)
 
     implementation(libs.inject)
+
+    testImplementation(libs.bundles.tests.unit)
 }
