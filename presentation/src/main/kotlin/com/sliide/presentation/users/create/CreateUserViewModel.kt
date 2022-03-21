@@ -46,7 +46,6 @@ class CreateUserViewModel(
 
             if (nameError.value == NameErrors.NONE && emailError.value == EmailErrors.NONE) {
                 mutableCreate.value = true
-                resetState()
             }
         }
     }
@@ -63,6 +62,7 @@ class CreateUserViewModel(
 
     internal fun createConsumed() {
         mutableCreate.value = false
+        resetState()
     }
 
     private fun resetState() {
