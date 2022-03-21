@@ -30,10 +30,7 @@ class CreateUserViewModel(
     internal val create: StateFlow<Boolean> = mutableCreate
 
     internal fun onCancelClick() {
-        mutableName.value = ""
-        mutableNameError.value = NameErrors.NONE
-        mutableEmail.value = ""
-        mutableEmailError.value = EmailErrors.NONE
+        resetState()
     }
 
     internal fun onAddClick() {
@@ -49,6 +46,7 @@ class CreateUserViewModel(
 
             if (nameError.value == NameErrors.NONE && emailError.value == EmailErrors.NONE) {
                 mutableCreate.value = true
+                resetState()
             }
         }
     }
@@ -65,5 +63,12 @@ class CreateUserViewModel(
 
     internal fun createConsumed() {
         mutableCreate.value = false
+    }
+
+    private fun resetState() {
+        mutableName.value = ""
+        mutableNameError.value = NameErrors.NONE
+        mutableEmail.value = ""
+        mutableEmailError.value = EmailErrors.NONE
     }
 }
