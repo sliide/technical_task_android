@@ -1,15 +1,16 @@
 package com.sliide.domain.users.list
 
 import com.sliide.boundary.users.UsersRepo
+import com.sliide.interactor.users.list.LoadPageResult
 import com.sliide.interactor.users.list.UserItem
 import com.sliide.interactor.users.list.PagesInteractor
 import javax.inject.Inject
 
 class PagesInteractorImpl @Inject constructor(
-    private val usersRepo: UsersRepo
+    private val loadPage: LoadPageCase
 ) : PagesInteractor {
 
-    override suspend fun users(page: Int): List<UserItem> {
-        return usersRepo.users(page).map { user -> user.toUserItem() }
+    override suspend fun users(page: Int): LoadPageResult {
+        return loadPage.load(page)
     }
 }

@@ -11,7 +11,7 @@ class DeleteUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) :
             usersRepo.delete(userId)
             DeleteUserResult.Deleted
         } catch (ex: Exception) {
-            DeleteUserResult.UnknownError
+            DeleteUserResult.UnknownError(ex)
         }
     }
 }

@@ -19,9 +19,9 @@ class AddUserCaseImpl @Inject constructor(private val usersRepo: UsersRepo) : Ad
             Created(user.toUserItem())
         } catch (ex: FieldsProblem) {
             val fields = ex.fields.keys
-            if (fields.contains(EMAIL) || fields.contains(NAME)) FieldsError else UnknownError
+            if (fields.contains(EMAIL) || fields.contains(NAME)) FieldsError else UnknownError(ex)
         } catch (ex: Exception) {
-            UnknownError
+            UnknownError(ex)
         }
     }
 }
