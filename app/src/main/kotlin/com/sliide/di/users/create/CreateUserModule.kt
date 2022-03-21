@@ -1,10 +1,6 @@
 package com.sliide.di.users.create
 
-import com.sliide.domain.users.create.ValidateEmailCase
-import com.sliide.domain.users.create.ValidateEmailCaseImpl
-import com.sliide.domain.users.create.ValidateNameCase
-import com.sliide.domain.users.create.ValidateNameCaseImpl
-import com.sliide.domain.users.create.CreateUserInteractorImpl
+import com.sliide.domain.users.create.*
 import com.sliide.interactor.users.create.CreateUserInteractor
 import dagger.Binds
 import dagger.Module

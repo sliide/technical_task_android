@@ -21,8 +21,8 @@ class UserListViewModel @Inject constructor(
     private val mutableDialog = MutableStateFlow<Dialogs>(Dialogs.None)
     internal val dialog: StateFlow<Dialogs> = mutableDialog
 
-    private val mutableErrors = MutableStateFlow(Errors.NONE)
-    internal val errors: StateFlow<Errors> = mutableErrors
+    private val mutableError = MutableStateFlow(Error.NONE)
+    internal val error: StateFlow<Error> = mutableError
 
     private val modificationEvents = MutableStateFlow<List<UserItemEvents>>(emptyList())
 
@@ -46,8 +46,9 @@ class UserListViewModel @Inject constructor(
 
             when (val result = interactor.addNewUser(name, email)) {
                 is AddUserResult.Created -> modificationEvents.value += UserItemEvents.Add(result.user)
-                AddUserResult.FieldsError -> mutableErrors.value = Errors.CHECK_FIELDS
-                is AddUserResult.UnknownError -> mutableErrors.value = Errors.UNKNOWN
+                AddUserResult.FieldsError -> mutableError.value = Error.CHECK_FIELDS
+                is AddUserResult.UnknownError -> mutableError.value = Error.UNKNOWN
+                is AddUserResult.EmailAlreadyTaken -> mutableError.value = Error.EMAIL_ALREADY_TAKEN
             }
         }
     }
@@ -58,7 +59,7 @@ class UserListViewModel @Inject constructor(
         viewModelScope.launch {
             when (interactor.deleteUser(userId)) {
                 DeleteUserResult.Deleted -> modificationEvents.value += UserItemEvents.Remove(userId)
-                is DeleteUserResult.UnknownError -> mutableErrors.value = Errors.UNKNOWN
+                is DeleteUserResult.UnknownError -> mutableError.value = Error.UNKNOWN
             }
         }
     }
@@ -75,7 +76,11 @@ class UserListViewModel @Inject constructor(
         mutableDialog.value = Dialogs.CreateUser
     }
 
-    internal fun loadListError(throwable: Throwable) {
-        mutableErrors.value = Errors.LOADING_LIST_FAILURE
+    internal fun loadListError() {
+        mutableError.value = Error.LOADING_LIST_FAILURE
+    }
+
+    internal fun onErrorSnackAction() {
+        mutableError.value = Error.NONE
     }
 }

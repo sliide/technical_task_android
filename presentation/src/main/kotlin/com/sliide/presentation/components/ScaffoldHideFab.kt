@@ -2,6 +2,7 @@ package com.sliide.presentation.components
 
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,6 +19,7 @@ import kotlin.math.roundToInt
 @Composable
 internal fun ScaffoldHideFabByScroll(
     fab: @Composable (Modifier) -> Unit,
+    snackBarHost: @Composable (SnackbarHostState) -> Unit,
     content: @Composable () -> Unit
 ) {
     val maxOffsetPx = with(LocalDensity.current) { Dimens.fabOffset.roundToPx().toFloat() }
@@ -38,7 +40,8 @@ internal fun ScaffoldHideFabByScroll(
 
     Scaffold(
         Modifier.nestedScroll(nestedScrollConnection),
-        floatingActionButton = { fab(Modifier.offset { fabOffset }) }
+        floatingActionButton = { fab(Modifier.offset { fabOffset }) },
+        snackbarHost = snackBarHost
     ) {
         content()
     }

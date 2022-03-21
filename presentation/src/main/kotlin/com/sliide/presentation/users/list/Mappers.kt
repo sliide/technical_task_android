@@ -16,10 +16,10 @@ fun EmailErrors.toErrorString(resources: Resources): String = when (this) {
     EmailErrors.NONE -> ""
 }
 
-fun Errors.toErrorString(resources: Resources, vararg params: String): String = when (this) {
-    Errors.CHECK_FIELDS -> resources.getString(R.string.users_field_error)
-    Errors.UNKNOWN -> resources.getString(R.string.unknown_error)
-    Errors.LOADING_LIST_FAILURE -> resources.getString(R.string.loading_list_failed)
-    Errors.EMAIL_ALREADY_TAKEN -> resources.getString(R.string.email_already_taken_template, params)
-    Errors.NONE -> ""
+fun Error.toErrorString(resources: Resources): String = when (this) {
+    Error.CHECK_FIELDS -> resources.getString(R.string.users_field_error)
+    Error.UNKNOWN -> resources.getString(R.string.unknown_error)
+    Error.LOADING_LIST_FAILURE -> resources.getString(R.string.loading_list_failed)
+    Error.EMAIL_ALREADY_TAKEN -> resources.getString(R.string.email_already_taken)
+    Error.NONE -> ""
 }

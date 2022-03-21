@@ -3,10 +3,7 @@ package com.sliide.di.users.list
 import com.sliide.boundary.users.UsersRepo
 import com.sliide.data.users.UsersRepoImpl
 import com.sliide.domain.users.list.*
-import com.sliide.interactor.users.list.PagesInteractor
 import com.sliide.interactor.users.list.UserListInteractor
-import com.sliide.presentation.users.list.PagingSourceFactory
-import com.sliide.presentation.users.list.PagingSourceFactoryImpl
 import dagger.Binds
 import dagger.Module
 

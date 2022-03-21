@@ -3,8 +3,8 @@ package com.sliide.presentation.users.list
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sliide.interactor.users.list.LoadPageResult
-import com.sliide.interactor.users.list.UserItem
 import com.sliide.interactor.users.list.PagesInteractor
+import com.sliide.interactor.users.list.UserItem
 import javax.inject.Inject
 
 class PagingSourceFactoryImpl @Inject constructor(

@@ -13,7 +13,6 @@ import com.sliide.presentation.users.list.Dialogs
 import com.sliide.presentation.users.list.UserListScreen
 import com.sliide.presentation.users.list.UserListViewModel
 import com.sliide.presentation.users.remove.ConfirmRemoveScreen
-import java.util.*
 
 @Composable
 internal fun UserListScreen() {

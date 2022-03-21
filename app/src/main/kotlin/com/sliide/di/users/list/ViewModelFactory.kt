@@ -3,8 +3,8 @@ package com.sliide.di.users.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sliide.interactor.users.list.UserListInteractor
-import com.sliide.presentation.users.list.UserListViewModel
 import com.sliide.presentation.users.list.PagingSourceFactory
+import com.sliide.presentation.users.list.UserListViewModel
 import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor(

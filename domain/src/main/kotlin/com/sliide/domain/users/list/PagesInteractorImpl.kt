@@ -1,8 +1,6 @@
 package com.sliide.domain.users.list
 
-import com.sliide.boundary.users.UsersRepo
 import com.sliide.interactor.users.list.LoadPageResult
-import com.sliide.interactor.users.list.UserItem
 import com.sliide.interactor.users.list.PagesInteractor
 import javax.inject.Inject
 

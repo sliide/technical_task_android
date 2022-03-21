@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -26,6 +27,7 @@ import com.sliide.interactor.users.list.UserItem
 import com.sliide.presentation.R
 import com.sliide.presentation.components.FullScreenProgress
 import com.sliide.presentation.components.ScaffoldHideFabByScroll
+import com.sliide.presentation.components.SnackMessage
 import com.sliide.presentation.theme.Dimens
 import com.sliide.presentation.theme.EmailBlue
 import com.sliide.presentation.theme.Shapes
@@ -35,32 +37,29 @@ fun UserListScreen(viewModel: UserListViewModel, showDialog: @Composable (Dialog
     val dialog by viewModel.dialog.collectAsState()
     if (dialog != Dialogs.None) showDialog(dialog)
 
+    val error by viewModel.error.collectAsState()
+    val message = error.toErrorString(LocalContext.current.resources)
+
     val items = viewModel.items.collectAsLazyPagingItems()
 
-    when (val state = items.loadState.source.refresh) {
+    when (items.loadState.source.refresh) {
         LoadState.Loading -> FullScreenProgress()
-        is LoadState.Error -> viewModel.loadListError(state.error)
+        is LoadState.Error -> viewModel.loadListError()
 
         is LoadState.NotLoading -> ScaffoldHideFabByScroll(
-            fab = { modifier -> Fab(modifier) { viewModel.onFabClick() } }
+            fab = { modifier -> if (message.isEmpty()) Fab(modifier) { viewModel.onFabClick() } },
+            snackBarHost = {
+                if (message.isNotEmpty())
+                    SnackMessage(
+                        message = message,
+                        actionLabel = stringResource(R.string.ok),
+                        duration = SnackbarDuration.Indefinite,
+                        action = { viewModel.onErrorSnackAction() }
+                    )
+            }
         ) {
             UsersList(pagingItems = items) { item -> viewModel.onItemLongClick(item) }
         }
-    }
-}
-
-@Composable
-private fun Fab(modifier: Modifier, onClick: () -> Unit) {
-    FloatingActionButton(
-        onClick = onClick,
-        modifier = Modifier
-            .navigationBarsPadding()
-            .then(modifier)
-    ) {
-        Icon(
-            imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.add_new_user)
-        )
     }
 }
 
@@ -144,4 +143,19 @@ private fun PageLoadingError() {
         text = stringResource(R.string.loading_list_failed),
         style = TextStyle(color = MaterialTheme.colors.error)
     )
+}
+
+@Composable
+private fun Fab(modifier: Modifier, onClick: () -> Unit) {
+    FloatingActionButton(
+        onClick = onClick,
+        modifier = Modifier
+            .navigationBarsPadding()
+            .then(modifier)
+    ) {
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = stringResource(R.string.add_new_user)
+        )
+    }
 }
