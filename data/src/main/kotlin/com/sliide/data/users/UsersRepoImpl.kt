@@ -32,7 +32,7 @@ class UsersRepoImpl @Inject constructor(
 
     override suspend fun create(name: String, email: String): User = withContext(io) {
         val gender = "male" // TODO ask about def value
-        val status = "1active" // TODO ask about def active
+        val status = "active" // TODO ask about def active
         val body = CreateUserDto(name, email, gender, status)
         val result = userServices.create(body)
 
