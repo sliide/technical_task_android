@@ -56,7 +56,7 @@ fun CreateUserDialog(
         onDismissRequest = onCancel,
         nameChanged = { text -> viewModel.onNameChanged(text) },
         emailChanged = { text -> viewModel.onEmailChanged(text) },
-        onClickAdd = { viewModel.onAddUserClick() },
+        onClickAdd = { viewModel.onAddClick() },
         onClickCancel = onCancel
     )
 }

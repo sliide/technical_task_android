@@ -36,7 +36,7 @@ class CreateUserViewModel(
         mutableEmailError.value = EmailErrors.NONE
     }
 
-    internal fun onAddUserClick() {
+    internal fun onAddClick() {
         val name = mutableName.value.trim()
         val email = mutableEmail.value.trim()
 
@@ -48,7 +48,7 @@ class CreateUserViewModel(
             mutableNameError.value = nameDeferred.await()
 
             if (nameError.value == NameErrors.NONE && emailError.value == EmailErrors.NONE) {
-                mutableCreate.value = false
+                mutableCreate.value = true
             }
         }
     }
