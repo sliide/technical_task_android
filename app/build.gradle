@@ -1,0 +1,140 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+    id "dagger.hilt.android.plugin"
+}
+
+def appVersionCode = getVersionCode()
+def appVersionName = getVersionName()
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        applicationId "com.hanna.sliidetest"
+        minSdkVersion 21
+        targetSdkVersion 31
+        versionCode appVersionCode
+        versionName appVersionName
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BASE_URL", "\"https://gorest.co.in/\""
+        buildConfigField "String", "API_KEY", "\"0d9b2af78933d6ba89d37ded6e32339b9abdf8c6eaeedbcfc336af004105f9fe\""
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            shrinkResources false
+            minifyEnabled false
+            debuggable true
+        }
+    }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    // Kotlin Standard Library
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    // Support Library
+    implementation "androidx.core:core-ktx:$kotlinCoreVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.fragment:fragment-ktx:$supportFragmentVersion"
+    implementation "androidx.activity:activity-ktx:$supportActivityVersion"
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-process:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+
+    // Google Material
+    implementation "com.google.android.material:material:$materialVersion"
+
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navVersion"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion"
+
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
+
+    // RecyclerView
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+
+    // Coroutines Adapter
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutinesAdapterVersion"
+
+    //DI- hilt
+    implementation 'com.google.dagger:hilt-android:2.38.1'
+    kapt 'com.google.dagger:hilt-android-compiler:2.38.1'
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+
+    testImplementation "com.google.truth:truth:1.1.3"
+
+    // Unit Testing
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "io.mockk:mockk:$mockk"
+    testImplementation "androidx.arch.core:core-testing:$archCoreTest"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTest"
+    androidTestImplementation "androidx.test.ext:junit:$androidJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+}
+
+static def getVersionCode() {
+    def buildNumber = System.getenv('ANDROID_VERSION_CODE')
+
+    if (buildNumber != null && buildNumber.isNumber()) {
+        return buildNumber.toInteger()
+    }
+    return 1
+}
+
+static def getVersionName() {
+    def majorNumber = 0
+    def minorNumber = 0
+    return majorNumber + "." + minorNumber + "." + getVersionCode()
+}

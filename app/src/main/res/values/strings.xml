@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Hanna Task</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="my_contacts">My contacts</string>
+
+<!--users info-->
+    <string name="user_name">Name: %s</string>
+    <string name="user_email">Email: %s</string>
+    <string name="user_created_at">Created: %s</string>
+</resources>
