@@ -1,0 +1,102 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply from: '../gradle/dependencies.gradle'
+apply from: '../gradle/hilt.config.gradle'
+
+android {
+    compileSdk versions.compileSdk
+
+    defaultConfig {
+        applicationId "com.slide.test.exercise"
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    signingConfigs {
+        release {
+        }
+    }
+
+    productFlavors {
+        dev {
+            buildConfigField "String", "API_BASE_URL", "\"https://gorest.co.in/\""
+        }
+
+        qa {
+            buildConfigField "String", "API_BASE_URL", "\"https://gorest.co.in/\""
+        }
+
+        production {
+            buildConfigField "String", "API_BASE_URL", "\"https://gorest.co.in/\""
+            signingConfig signingConfigs.release
+        }
+    }
+    flavorDimensions "default"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion versions.androidxCompose
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+
+    implementation project(':core')
+    implementation project(':usecase')
+
+    implementation deps.core.ktx
+
+    implementation deps.rxJava3.android
+    implementation deps.rxJava3.core
+
+    implementation deps.compose.foundation
+    implementation deps.compose.foundationLayout
+    implementation deps.compose.materialIcons
+    implementation deps.compose.material3
+    implementation deps.compose.activity
+    implementation deps.compose.tooling
+    implementation deps.hilt.viewModel
+
+    testImplementation deps.test.junit
+    testImplementation deps.test.espresso
+
+    androidTestImplementation deps.compose.test.junit4
+
+    debugImplementation deps.compose.debug.testManifest
+    debugImplementation deps.compose.debug.tooling
+
+    //implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+}

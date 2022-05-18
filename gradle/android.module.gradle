@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+apply from: '../gradle/hilt.config.gradle'
+
+android {
+    compileSdk versions.compileSdk
+
+    defaultConfig {
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation deps.core.ktx
+
+    implementation deps.rxJava3.android
+    implementation deps.rxJava3.core
+    implementation deps.rxJava3.reactiveNetwork
+
+    implementation deps.rxJava3.rxReplayShare
+    implementation deps.rxJava3.rxRelay
+
+    testImplementation deps.test.junit
+
+    androidTestImplementation deps.test.androidExt
+}

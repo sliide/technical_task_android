@@ -1,0 +1,11 @@
+apply from: '../gradle/android.module.gradle'
+
+dependencies {
+    implementation project(':core')
+
+    implementation deps.retrofit.core
+    implementation deps.retrofit.adapter.rxjava3
+    implementation deps.retrofit.adapter.converter
+    implementation deps.retrofit.logging
+
+}

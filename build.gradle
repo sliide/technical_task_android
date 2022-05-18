@@ -1,0 +1,18 @@
+
+buildscript {
+    apply from: 'gradle/dependencies.gradle'
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath classpath.androidGradlePlugin
+        classpath classpath.kotlinGradlePlugin
+        classpath deps.hilt.classpath
+    }
+
+}
+
+

@@ -1,0 +1,14 @@
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+
+android {
+    hilt {
+        enableAggregatingTask = true
+    }
+}
+
+dependencies {
+    implementation deps.hilt.android
+    kapt deps.hilt.compiler
+}
