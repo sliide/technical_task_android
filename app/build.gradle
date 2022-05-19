@@ -5,6 +5,7 @@ plugins {
 
 apply from: '../gradle/dependencies.gradle'
 apply from: '../gradle/hilt.config.gradle'
+apply from: '../gradle/compose.config.gradle'
 
 android {
     compileSdk versions.compileSdk
@@ -59,12 +60,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion versions.androidxCompose
-    }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -76,27 +71,22 @@ dependencies {
 
     implementation project(':core')
     implementation project(':usecase')
+    implementation project(':core-ui')
+    implementation project(':users')
 
     implementation deps.core.ktx
 
     implementation deps.rxJava3.android
     implementation deps.rxJava3.core
 
-    implementation deps.compose.foundation
-    implementation deps.compose.foundationLayout
-    implementation deps.compose.materialIcons
-    implementation deps.compose.material3
-    implementation deps.compose.activity
-    implementation deps.compose.tooling
     implementation deps.hilt.viewModel
+
+    implementation deps.navigation.compose
+    implementation deps.navigation.hiltCompose
+    implementation deps.navigation.viewModelCompose
 
     testImplementation deps.test.junit
     testImplementation deps.test.espresso
-
-    androidTestImplementation deps.compose.test.junit4
-
-    debugImplementation deps.compose.debug.testManifest
-    debugImplementation deps.compose.debug.tooling
 
     //implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 }

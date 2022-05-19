@@ -1,7 +1,12 @@
 package com.slide.test.repository
 
+import com.slide.test.core.Page
+import com.slide.test.core.Result
+import com.slide.test.core.asResult
 import com.slide.test.network.service.UsersService
-import io.reactivex.rxjava3.core.Single
+import com.slide.test.repository.model.UserModel
+import com.slide.test.repository.model.toModel
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 /**
@@ -9,13 +14,16 @@ import javax.inject.Inject
  */
 interface UsersRepository {
 
-    fun getUsers(): Single<String>
+    fun getUsers(page: Long?): Observable<Result<Page<UserModel>>>
 }
 
-class UsersRepositoryImplementation @Inject constructor(
-    val usersService: UsersService
+internal class UsersRepositoryImplementation @Inject constructor(
+    private val usersService: UsersService
 ) : UsersRepository {
-    override fun getUsers(): Single<String> {
-        return usersService.fetchUsers().map { it.map { it.name }.joinToString(",") }
+
+    override fun getUsers(page: Long?): Observable<Result<Page<UserModel>>> {
+        return usersService.fetchUsers(page)
+            .map { pageDto -> pageDto.toModel() }
+            .asResult()
     }
 }

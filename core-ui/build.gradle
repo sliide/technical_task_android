@@ -1,0 +1,2 @@
+apply from: '../gradle/android.module.gradle'
+apply from: '../gradle/compose.config.gradle'

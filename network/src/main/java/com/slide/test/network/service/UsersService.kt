@@ -1,8 +1,12 @@
 package com.slide.test.network.service
 
-import com.slide.test.network.UserDto
+import com.slide.test.network.CustomHeaders.NO_AUTH
+import com.slide.test.network.model.PageDto
+import com.slide.test.network.model.UserDto
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
 
 /**
  * Created by Stefan Halus on 18 May 2022
@@ -10,7 +14,7 @@ import retrofit2.http.GET
 
 interface UsersService {
 
-    @GET("public/v2/users")
-    fun fetchUsers() : Single<List<UserDto>>
-
+    @Headers("$NO_AUTH:true")
+    @GET("public-api/users")
+    fun fetchUsers(@Query("page") page: Long?): Single<PageDto<UserDto>>
 }

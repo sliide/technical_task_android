@@ -1,0 +1,15 @@
+apply from: '../gradle/android.module.gradle'
+apply from: '../gradle/compose.config.gradle'
+
+dependencies {
+    implementation project(':core')
+    implementation project(':usecase')
+    implementation project(':core-ui')
+
+    implementation deps.hilt.viewModel
+
+    implementation deps.navigation.compose
+    implementation deps.navigation.hiltCompose
+    implementation deps.navigation.viewModelCompose
+
+}

@@ -1,6 +1,7 @@
 package com.slide.test.network.di
 
 import com.slide.test.core.NetworkConfig
+import com.slide.test.network.GoRestAuthInterceptor
 import com.slide.test.network.service.UsersService
 import dagger.Module
 import dagger.Provides
@@ -20,7 +21,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUsersService(
+    internal fun provideUsersService(
         networkConfig: NetworkConfig,
         okHttpClient: OkHttpClient
     ): UsersService {
@@ -35,12 +36,26 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient() : OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
+    internal fun provideOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        goRestAuthInterceptor: GoRestAuthInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(goRestAuthInterceptor)
             .addInterceptor(loggingInterceptor)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun providesAuthInterceptor(networkConfig: NetworkConfig) : GoRestAuthInterceptor {
+            return GoRestAuthInterceptor(networkConfig.accessToken)
+    }
+
+    @Provides
+    @Singleton
+    internal fun providesLoggingInterceptor() : HttpLoggingInterceptor {
+        return HttpLoggingInterceptor()
+            .apply { level = HttpLoggingInterceptor.Level.BODY }
     }
 }

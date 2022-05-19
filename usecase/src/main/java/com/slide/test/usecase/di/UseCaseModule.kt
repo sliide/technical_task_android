@@ -1,7 +1,7 @@
 package com.slide.test.usecase.di
 
-import com.slide.test.usecase.GetUsersUseCase
-import com.slide.test.usecase.GetUsersUseCaseImplementation
+import com.slide.test.usecase.users.GetLatestUsersUseCase
+import com.slide.test.usecase.users.GetLatestUsersUseCaseImplementation
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class UseCaseModule {
 
     @Binds
-    abstract fun bindGetUsersUseCase(
-        getUsersUseCase: GetUsersUseCaseImplementation
-    ): GetUsersUseCase
+    internal abstract fun bindGetUsersUseCase(
+        getUsersUseCase: GetLatestUsersUseCaseImplementation
+    ): GetLatestUsersUseCase
 }
