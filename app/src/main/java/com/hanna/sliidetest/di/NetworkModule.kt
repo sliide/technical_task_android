@@ -2,6 +2,7 @@ package com.hanna.sliidetest.di
 
 import com.hanna.sliidetest.data.network.FlowCallAdapterFactory
 import com.hanna.sliidetest.BuildConfig
+import com.hanna.sliidetest.BuildConfig.API_KEY
 import com.hanna.sliidetest.data.api.*
 import dagger.Module
 import dagger.Provides

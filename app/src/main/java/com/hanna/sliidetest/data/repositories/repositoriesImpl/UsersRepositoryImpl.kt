@@ -34,9 +34,9 @@ class UsersRepositoryImpl @Inject constructor(val api: UsersApi, val dao: UsersD
 
     override suspend fun getUsers(page: Int): Flow<Resource<List<User>>> {
         return object : FlowNetworkBoundResource<List<User>, List<UserDto>>() {
-            override suspend fun saveNetworkResult(item: List<UserDto>) {
+            override suspend fun saveNetworkResult(item: List<UserDto>?) {
 //                if wed want to update and have only the last page, (and not cached users) users table should be deleted here
-                dao.insertOrUpdate(item.map { UserMapper.map(it) })
+                dao.insertOrUpdate(item.orEmpty().map { UserMapper.map(it) })
             }
 
             override fun shouldFetch(): Boolean {
@@ -55,43 +55,46 @@ class UsersRepositoryImpl @Inject constructor(val api: UsersApi, val dao: UsersD
     }
 
     override suspend fun addUser(user: User): Flow<Resource<User>> {
-        val savedUserResponse = withContext(Dispatchers.IO) {
-            val userDto = UserDto(
-                null,
-                user.name,
-                user.email,
-                user.gender.gender,
-                UserStatus.ACTIVE.statusValue
-            )//based on the assumption all newly created users are active
-            api.addUser(userDto)
-        }.last()
-        return flow {
-            val resource = when (savedUserResponse) {
-                is ApiEmptyResponse -> Resource.success(null)
-                is ApiErrorResponse -> Resource.error(savedUserResponse.errorMessage, null)
-                is ApiSuccessResponse -> {
-                    val userResponse = UserMapper.map(savedUserResponse.body)
-                    dao.insertUser(userResponse)
-                    Resource.success(userResponse)
+        return object : FlowNetworkBoundResource<User, UserDto>() {
+            override suspend fun saveNetworkResult(item: UserDto?) {
+                item?.let {
+                    dao.insertUser(UserMapper.map(it))
                 }
             }
-            emit(resource)
-        }
+
+            override fun shouldFetch(): Boolean {
+                return true
+            }
+
+            override suspend fun loadFromDb(): Flow<User> {
+                return dao.getUserByIdFlow(user.id)
+            }
+
+
+            override suspend fun fetchFromNetwork(): Flow<ApiResponse<UserDto>> {
+                val userDto = UserDto(
+                    null,
+                    user.name,
+                    user.email,
+                    user.gender.gender,
+                    UserStatus.ACTIVE.statusValue
+                )
+                return api.addUser(userDto)
+            }
+
+        }.asFlow()
     }
 
-    override suspend fun deleteUser(userId: Int): Flow<Resource<List<User>>> {
-        withContext(Dispatchers.IO) {
-            when (api.deleteUser(userId.toLong()).last()) {
-                is ApiEmptyResponse -> dao.deleteUserById(userId)
-                is ApiErrorResponse -> 1
-                is ApiSuccessResponse -> {
+    override suspend fun deleteUser(userId: Int): Flow<Resource<Unit>> {
+        return flow {
+            withContext(Dispatchers.IO) {
+                val result = api.deleteUser(userId.toLong()).last()
+                if ((result is ApiErrorResponse).not() || (result as? ApiErrorResponse)?.code == 404) {
                     dao.deleteUserById(userId)
+                } else if (result is ApiErrorResponse){
+                    emit(Resource.error("Something went wrong..", null))
                 }
             }
-        }
-
-        return flow {
-            emit(Resource.success(emptyList()))
         }
     }
 }

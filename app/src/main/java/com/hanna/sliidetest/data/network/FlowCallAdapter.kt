@@ -4,6 +4,7 @@ package com.hanna.sliidetest.data.network
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.awaitResponse
@@ -20,10 +21,10 @@ class FlowCallAdapter<R>(private val responseType: Type) :
             if (response.isSuccessful) {
                 emit(ApiResponse.create(response))
             } else {
-                emit(ApiResponse.create<R>(Throwable("An error occurred")))
+                emit(ApiResponse.create<R>(response.code(), Throwable("An error occurred")))
             }
         }.catch {
-            emit(ApiResponse.create(it))
+            emit(ApiResponse.create(500, it))
         }
     }
 }

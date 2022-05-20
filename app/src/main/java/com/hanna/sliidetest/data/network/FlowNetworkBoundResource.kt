@@ -28,7 +28,9 @@ abstract class FlowNetworkBoundResource<ResultType, RequestType> {
                             val data = loadFromDb().first()
                             emit(Resource.error(apiResponse.errorMessage, data))
                         }
-                        else -> {
+                        is ApiEmptyResponse -> {
+                            saveNetworkResult(null)
+                            emit(Resource.success(null))
                         }
                     }
                 }
@@ -46,7 +48,7 @@ abstract class FlowNetworkBoundResource<ResultType, RequestType> {
     protected open fun processResponse(response: RequestType) = response
 
     @WorkerThread
-    protected abstract suspend fun saveNetworkResult(item: RequestType)
+    protected abstract suspend fun saveNetworkResult(item: RequestType?)
 
     @MainThread
     protected abstract fun shouldFetch(): Boolean

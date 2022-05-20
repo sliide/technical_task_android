@@ -9,5 +9,5 @@ interface UsersRepository {
     suspend fun getPageCount(): Int
     suspend fun getUsers(page: Int): Flow<Resource<List<User>>>
     suspend fun addUser(user: User): Flow<Resource<User>>
-    suspend fun deleteUser(userId: Int): Flow<Resource<List<User>>>
+    suspend fun deleteUser(userId: Int): Flow<Resource<Unit>>
 }

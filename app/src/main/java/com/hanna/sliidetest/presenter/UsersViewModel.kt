@@ -28,8 +28,8 @@ class UsersViewModel(
     val addUserState: LiveData<Resource<User>> = Transformations.map(_addUserState){
         return@map it
     }
-    private val _deleteUserState = MutableLiveData<Resource<List<User>>>(Resource.success(null))
-    val deleteUserState: LiveData<Resource<List<User>>> = Transformations.map(_deleteUserState){
+    private val _deleteUserState = MutableLiveData<Resource<Unit>>(Resource.success(null))
+    val deleteUserState: LiveData<Resource<Unit>> = Transformations.map(_deleteUserState){
         return@map it
     }
 

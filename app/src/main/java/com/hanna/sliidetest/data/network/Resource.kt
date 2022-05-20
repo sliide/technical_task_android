@@ -2,7 +2,7 @@ package com.hanna.sliidetest.data.network
 
 //Prototypes - V
 //Tests - V
-//from architecture components sample
+//based on architecture components sample
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
     companion object {
         fun <T> loading(data: T?): Resource<T> {

@@ -11,17 +11,17 @@ interface UsersDao {
     @Insert(onConflict = IGNORE)//chose to ignore, sine the created time is calculated locally..
     suspend fun insertUser(user: User)
 
-    @Insert(onConflict = IGNORE)
-    suspend fun insertUsers(users: List<User>)
-
     @Query("SELECT * FROM user")
     fun getAllUsers(): Flow<List<User>>
 
     @Query("SELECT * FROM user WHERE id = :id")
     fun getUserById(id: Int): User?
 
+    @Query("SELECT * FROM user WHERE id = :id")
+    fun getUserByIdFlow(id: Int): Flow<User>
+
     @Query("DELETE FROM user WHERE id = :id")
-    fun deleteUserById(id: Int)
+    suspend fun deleteUserById(id: Int)
 
     @Query("UPDATE user SET name = :name, email =:email WHERE id = :id")
     fun updateUser(id: Int, name: String, email: String)

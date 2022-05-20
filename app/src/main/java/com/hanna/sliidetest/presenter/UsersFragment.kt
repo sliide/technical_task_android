@@ -97,7 +97,7 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
                             .setTitle("An Error Occurred")
                             .setMessage(resource.message + "\nWould you like to retry?")
                             .setPositiveButton("Yes"
-                            ) { p0, p1 ->
+                            ) { p0, _ ->
                                 p0?.dismiss()
                                 findNavController().navigate(R.id.action_UsersFragment_to_AddUserDialog)
                             }
@@ -124,12 +124,7 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
                         AlertDialog.Builder(requireContext())
                             .setTitle("An Error Occurred")
                             .setMessage(resource.message + "\nWould you like to retry?")
-                            .setPositiveButton("Yes"
-                            ) { p0, p1 ->
-                                p0?.dismiss()
-                                findNavController().navigate(R.id.action_UsersFragment_to_AddUserDialog)
-                            }
-                            .setNegativeButton("No"){ p0, p1 ->
+                            .setNegativeButton("OK"){ p0, p1 ->
                                 p0?.dismiss()
                             }
                             .create().show()
@@ -145,8 +140,8 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
             .setMessage("Are you sure you want to delete this user?")
             .setPositiveButton("Yes"
             ) { p0, p1 ->
-                p0?.dismiss()
                 viewModel.deleteUser(userId)
+                p0?.dismiss()
             }
             .setNegativeButton("No"){ p0, p1 ->
                 p0?.dismiss()
