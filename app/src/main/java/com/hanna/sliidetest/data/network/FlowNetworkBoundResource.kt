@@ -1,6 +1,5 @@
 package com.hanna.sliidetest.data.network
 
-import android.util.Log
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.*

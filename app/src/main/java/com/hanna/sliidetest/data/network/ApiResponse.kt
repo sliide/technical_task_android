@@ -16,6 +16,7 @@
 
 package com.hanna.sliidetest.data.network
 
+import okhttp3.Headers
 import retrofit2.Response
 
 /**
@@ -36,7 +37,7 @@ sealed class ApiResponse<T> {
                 //since I have no contract with BE, I may get a response with no body,
                 // although the response is successful.
                 body?.let {
-                    ApiSuccessResponse(it)
+                    ApiSuccessResponse(it, response.headers())
                 } ?: ApiEmptyResponse()
             } else {
                 val msg = response.errorBody()?.string()
@@ -51,6 +52,6 @@ sealed class ApiResponse<T> {
 //response types
 class ApiEmptyResponse<T> : ApiResponse<T>()
 
-data class ApiSuccessResponse<T>(val body: T) : ApiResponse<T>()
+data class ApiSuccessResponse<T>(val body: T, val headers: Headers?) : ApiResponse<T>()
 
 data class ApiErrorResponse<T>(val errorMessage: String) : ApiResponse<T>()

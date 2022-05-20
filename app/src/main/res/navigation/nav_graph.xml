@@ -11,6 +11,11 @@
         tools:layout="@layout/fragment_users">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"/>
+            android:id="@+id/action_UsersFragment_to_AddUserDialog"
+            app:destination="@id/myDialog" />
     </fragment>
+
+    <dialog
+        android:id="@+id/myDialog"
+        android:name="com.hanna.sliidetest.presenter.AddUserDialog" />
 </navigation>

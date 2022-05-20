@@ -4,4 +4,7 @@
     <dimen name="spacing_medium">16dp</dimen>
     <dimen name="fsBody1">14sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="spacing_big">24dp</dimen>
+    <dimen name="fsBody25">18sp</dimen>
+    <dimen name="padding_default">4dp</dimen>
 </resources>

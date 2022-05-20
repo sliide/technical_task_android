@@ -36,8 +36,9 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener {
             //show add user dialog
+            navController.navigate(R.id.action_UsersFragment_to_AddUserDialog)
         }
     }
 
