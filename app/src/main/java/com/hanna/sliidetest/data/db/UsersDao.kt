@@ -1,10 +1,7 @@
 package com.hanna.sliidetest.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.IGNORE
-import androidx.room.Query
-import androidx.room.Transaction
 import com.hanna.sliidetest.models.User
 import kotlinx.coroutines.flow.Flow
 
@@ -22,6 +19,9 @@ interface UsersDao {
 
     @Query("SELECT * FROM user WHERE id = :id")
     fun getUserById(id: Int): User?
+
+    @Query("DELETE FROM user WHERE id = :id")
+    fun deleteUserById(id: Int)
 
     @Query("UPDATE user SET name = :name, email =:email WHERE id = :id")
     fun updateUser(id: Int, name: String, email: String)

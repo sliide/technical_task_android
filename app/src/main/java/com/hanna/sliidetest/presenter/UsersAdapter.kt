@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.hanna.sliidetest.R
 import com.hanna.sliidetest.models.User
 
-class UsersAdapter : ListAdapter<User, BindableViewHolder<User>>(diffUtil) {
+class UsersAdapter(val deleteUser: (id: Int) -> Unit) :
+    ListAdapter<User, BindableViewHolder<User>>(diffUtil) {
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<User>() {
@@ -16,7 +17,7 @@ class UsersAdapter : ListAdapter<User, BindableViewHolder<User>>(diffUtil) {
             }
 
             override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-                 return oldItem.name == newItem.name && oldItem.email == newItem.email && oldItem.creationTime == newItem.creationTime
+                return oldItem.name == newItem.name && oldItem.email == newItem.email && oldItem.creationTime == newItem.creationTime
             }
         }
     }
@@ -24,10 +25,16 @@ class UsersAdapter : ListAdapter<User, BindableViewHolder<User>>(diffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder<User> {
         return UserInfoViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.single_user_item, parent, false))
+                .inflate(R.layout.single_user_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: BindableViewHolder<User>, position: Int) {
-        holder.bind(currentList[position])
+        val item = currentList[position]
+        holder.itemView.setOnLongClickListener {
+            deleteUser(item.id)
+            return@setOnLongClickListener true
+        }
+        holder.bind(item)
     }
 }

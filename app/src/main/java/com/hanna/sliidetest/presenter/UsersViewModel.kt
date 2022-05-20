@@ -3,6 +3,7 @@ package com.hanna.sliidetest.presenter
 import androidx.lifecycle.*
 import com.hanna.sliidetest.data.network.Resource
 import com.hanna.sliidetest.domain.usecases.AddUserUseCase
+import com.hanna.sliidetest.domain.usecases.DeleteUserUseCase
 import com.hanna.sliidetest.domain.usecases.GetPageCountUseCase
 import com.hanna.sliidetest.domain.usecases.GetUsersUseCase
 import com.hanna.sliidetest.models.User
@@ -17,6 +18,7 @@ class UsersViewModel(
     private val getUsersUseCase: GetUsersUseCase,
     private val getPageCountUseCase: GetPageCountUseCase,
     private val addUserUseCase: AddUserUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<Resource<List<User>>>(Resource.loading(emptyList()))
@@ -24,6 +26,10 @@ class UsersViewModel(
 
     private val _addUserState = MutableLiveData<Resource<User>>(Resource.success(null))
     val addUserState: LiveData<Resource<User>> = Transformations.map(_addUserState){
+        return@map it
+    }
+    private val _deleteUserState = MutableLiveData<Resource<List<User>>>(Resource.success(null))
+    val deleteUserState: LiveData<Resource<List<User>>> = Transformations.map(_deleteUserState){
         return@map it
     }
 
@@ -52,17 +58,26 @@ class UsersViewModel(
             }
         }
     }
+
+    fun deleteUser(userId: Int) {
+        viewModelScope.launch {
+            deleteUserUseCase(userId).collect {
+                _deleteUserState.postValue(it)
+            }
+        }
+    }
 }
 
 class UsersViewModelFactory @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
     private val getPageCountUseCase: GetPageCountUseCase,
-    private val addUserUseCase: AddUserUseCase
+    private val addUserUseCase: AddUserUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase
 ) :
     ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return UsersViewModel(getUsersUseCase, getPageCountUseCase, addUserUseCase) as T
+        return UsersViewModel(getUsersUseCase, getPageCountUseCase, addUserUseCase, deleteUserUseCase) as T
     }
 }

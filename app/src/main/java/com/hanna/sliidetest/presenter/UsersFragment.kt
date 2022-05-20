@@ -30,7 +30,7 @@ import javax.inject.Inject
 class UsersFragment : Fragment(R.layout.fragment_users) {
 
     private val binding: FragmentUsersBinding by viewBinding(FragmentUsersBinding::bind)
-    private val usersAdapter = UsersAdapter()
+    private val usersAdapter = UsersAdapter(::deleteUserById)
 
     @Inject
     lateinit var factory: UsersViewModelFactory
@@ -109,5 +109,49 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.deleteUserState.observe(viewLifecycleOwner) { resource ->
+                when (resource.status) {
+                    Status.LOADING -> {
+                        //allow work to be done in background
+                    }
+                    Status.SUCCESS -> {
+                        //view will automatically be updated
+                    }
+                    Status.ERROR -> {
+//                        In case of error, display message to user
+                        AlertDialog.Builder(requireContext())
+                            .setTitle("An Error Occurred")
+                            .setMessage(resource.message + "\nWould you like to retry?")
+                            .setPositiveButton("Yes"
+                            ) { p0, p1 ->
+                                p0?.dismiss()
+                                findNavController().navigate(R.id.action_UsersFragment_to_AddUserDialog)
+                            }
+                            .setNegativeButton("No"){ p0, p1 ->
+                                p0?.dismiss()
+                            }
+                            .create().show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun deleteUserById(userId: Int){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Are you sure?")
+            .setMessage("Are you sure you want to delete this user?")
+            .setPositiveButton("Yes"
+            ) { p0, p1 ->
+                p0?.dismiss()
+                viewModel.deleteUser(userId)
+            }
+            .setNegativeButton("No"){ p0, p1 ->
+                p0?.dismiss()
+            }
+            .create().show()
+
     }
 }

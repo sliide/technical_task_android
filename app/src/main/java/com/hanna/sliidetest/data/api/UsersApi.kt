@@ -3,10 +3,7 @@ package com.hanna.sliidetest.data.api
 import com.hanna.sliidetest.data.dto.UserDto
 import com.hanna.sliidetest.data.network.ApiResponse
 import kotlinx.coroutines.flow.Flow
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface UsersApi {
 
@@ -20,4 +17,7 @@ interface UsersApi {
 
     @POST("/public/v2/users")
     fun addUser(@Body user: UserDto): Flow<ApiResponse<UserDto>>
+
+    @DELETE("/public/v2/users/{userId}")
+    fun deleteUser(@Path("userId") userId: Long): Flow<ApiResponse<Unit>>
 }

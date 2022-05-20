@@ -78,4 +78,20 @@ class UsersRepositoryImpl @Inject constructor(val api: UsersApi, val dao: UsersD
             emit(resource)
         }
     }
+
+    override suspend fun deleteUser(userId: Int): Flow<Resource<List<User>>> {
+        withContext(Dispatchers.IO) {
+            when (api.deleteUser(userId.toLong()).last()) {
+                is ApiEmptyResponse -> dao.deleteUserById(userId)
+                is ApiErrorResponse -> 1
+                is ApiSuccessResponse -> {
+                    dao.deleteUserById(userId)
+                }
+            }
+        }
+
+        return flow {
+            emit(Resource.success(emptyList()))
+        }
+    }
 }
