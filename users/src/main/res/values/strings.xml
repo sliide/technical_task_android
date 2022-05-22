@@ -2,4 +2,11 @@
 <resources>
 
     <string name="users_loading">Loading users</string>
+    <string name="delete_user_dialog_title">Delete user</string>
+    <string name="user_delete_dialog_prompt">Are you sure you want to delete %s?</string>
+    <string name="user_delete_dialog_button_confirm">Yes</string>
+    <string name="user_delete_dialog_button_dismiss">Cancel</string>
+    <string name="dialog_info_success_title">Success</string>
+    <string name="user_delete_dialog_success_message">Successfully deleted %s</string>
+    <string name="dialog_button_ok">Ok</string>
 </resources>

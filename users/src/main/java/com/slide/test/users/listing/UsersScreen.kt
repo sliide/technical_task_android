@@ -6,7 +6,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,12 +19,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.MutableLiveData
 import com.slide.test.core_ui.component.LoadingWheel
 import com.slide.test.core_ui.theme.SliideTestTheme
 import com.slide.test.usecase.users.model.Gender
 import com.slide.test.usecase.users.model.UserStatus
 import com.slide.test.users.R.string
-import com.slide.test.users.UsersViewModel
 import com.slide.test.users.model.UserUI
 
 /**
@@ -30,15 +32,26 @@ import com.slide.test.users.model.UserUI
  */
 @Composable
 fun UsersRoute(
-//    windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
-    viewModel: UsersViewModel = hiltViewModel()
+    userDeleteResult: MutableLiveData<Boolean> = MutableLiveData(),
+    viewModel: UsersViewModel = hiltViewModel(),
+    navigateToDelete: (Long, String) -> Unit = { _, _ -> }
 ) {
     val viewState by viewModel.observableState.subscribeAsState(viewModel.initialState)
+
+    val userDeleted by userDeleteResult.observeAsState()
+
+    LaunchedEffect(userDeleted) {
+        if (userDeleted == true) {
+            viewModel.dispatch(Action.LoadUserList)
+            userDeleteResult.value = null
+        }
+    }
+
     UsersScreen(
         modifier = modifier,
         viewState = viewState,
-        onDeleteAction = { userUI -> viewModel.dispatch(Action.UserDeleteAction(userUI)) }
+        onDeleteIntent = { userUI -> navigateToDelete(userUI.id, userUI.name) }
     )
 }
 
@@ -46,18 +59,21 @@ fun UsersRoute(
 fun UsersScreen(
     modifier: Modifier = Modifier,
     viewState: State,
-    onDeleteAction: (UserUI) -> Unit,
+    onDeleteIntent: (UserUI) -> Unit = {}
 ) {
     when {
         viewState.isLoading -> LoadingUsers()
-        viewState.isEmpty -> showEmpty()
+        viewState.isEmpty -> EmptyUsers()
         viewState.isIdle -> {}
-        else -> UserList(modifier, viewState.userList, onDeleteAction = onDeleteAction)
+        else -> UserList(modifier, viewState.userList, onDeleteIntent = onDeleteIntent)
     }
 }
 
 @Composable
-fun UserList(modifier: Modifier, userList: List<UserUI>, onDeleteAction: (UserUI) -> Unit) {
+fun UserList(
+    modifier: Modifier, userList: List<UserUI>,
+    onDeleteIntent: (UserUI) -> Unit
+) {
     val configuration = LocalConfiguration.current
     val columns = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 3
     LazyVerticalGrid(
@@ -70,7 +86,7 @@ fun UserList(modifier: Modifier, userList: List<UserUI>, onDeleteAction: (UserUI
                 UserItem(
                     userUI = userUI,
                     onClick = { },
-                    onLongTap = { onDeleteAction(userUI) }
+                    onLongTap = { onDeleteIntent(userUI) }
                 )
             }
         }
@@ -102,7 +118,7 @@ fun LoadingUsers(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun showEmpty() {
+fun EmptyUsers() {
     Text(text = "Empty users", fontSize = 20.sp, modifier = Modifier.padding(30.dp))
 }
 

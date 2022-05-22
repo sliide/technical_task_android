@@ -15,14 +15,14 @@ import com.slide.test.users.navigation.usersGraph
 fun SliideNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String? = UsersDestination.route
+    startDestination: String
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination ?: UsersDestination.route,
+        startDestination = startDestination,
         modifier = modifier,
     ) {
-        usersGraph()
+        usersGraph(navController)
     }
 
 }

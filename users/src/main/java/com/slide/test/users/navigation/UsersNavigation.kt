@@ -1,53 +1,45 @@
 package com.slide.test.users.navigation
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.slide.test.core_ui.navigation.destination.NavDestination
+import androidx.navigation.compose.dialog
+import com.slide.test.core_ui.navigation.animation.ExpandShrinkAnimation
+import com.slide.test.core_ui.navigation.animation.SlideFromLeftAnimation
+import com.slide.test.users.delete.UserDeleteDialogRoute
 import com.slide.test.users.listing.UsersRoute
 
 /**
  * Created by Stefan Halus on 18 May 2022
  */
-object UsersDestination : NavDestination {
-    override val route: String = "users_route"
-    override val destination: String = "users_destination"
-}
 
-fun NavGraphBuilder.usersGraph(
-    //windowSizeClass: WindowSizeClass
-) {
-    composable(route = UsersDestination.route) {
-        EnterAnimation() {
-            UsersRoute(modifier = Modifier.fillMaxSize())
+fun NavGraphBuilder.usersGraph(navController: NavHostController) {
+
+    composable(route = UsersDestination.route) { backStackEntry ->
+        SlideFromLeftAnimation() {
+            UsersRoute(
+                userDeleteResult = backStackEntry?.savedStateHandle?.getLiveData(UserDeleteDestination.Result.resultArg),
+                modifier = Modifier.fillMaxSize()
+            ) { userId: Long, userName: String ->
+                navController.navigate(UserDeleteDestination.createRoute(userId, userName))
+            }
         }
     }
-}
 
-@Composable
-@OptIn(ExperimentalAnimationApi::class)
-fun EnterAnimation(content: @Composable () -> Unit) {
-    val transitionState = remember {
-        MutableTransitionState(
-            initialState = false
-        )
-    }.apply { targetState = true }
-
-    AnimatedVisibility(
-        visibleState = transitionState,
-        modifier = Modifier,
-        enter = slideInHorizontally (
-            initialOffsetX = { -40 }
-        ) + expandVertically(
-            expandFrom = Alignment.Top
-        ) + fadeIn(initialAlpha = 0.3f),
-        exit = slideOutHorizontally() + fadeOut()) {
-        content()
+    dialog(
+        route = UserDeleteDestination.route,
+        arguments = UserDeleteDestination.arguments
+    ) {
+        ExpandShrinkAnimation() {
+            UserDeleteDialogRoute(modifier = Modifier.fillMaxSize(),
+                onDismiss = { deleted ->
+                    val savedStateHandle = navController.previousBackStackEntry?.savedStateHandle
+                    savedStateHandle?.set(UserDeleteDestination.Result.resultArg, deleted)
+                    navController.popBackStack()
+                })
+        }
     }
+
 }

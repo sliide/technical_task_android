@@ -19,15 +19,6 @@ sealed class Change {
 
     object ShowAddUserPopup : Change()
 
-    data class AddUserError(val message: String) : Change()
+    data class ShowDeleteUserConfirmation(val userUI:UserUI) : Change()
 
-    data class AddUserSuccess(val message: String) : Change()
-
-    data class ShowDeletePopup(val title: String, val message: String) : Change()
-
-    data class ShowDeleteUserConfirmation(val title: String, val message: String) : Change()
-
-    data class DeleteUserSuccess(val message: String) : Change()
-
-    data class DeleteUserError(val title: String, val message: String) : Change()
 }

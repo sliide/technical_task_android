@@ -6,6 +6,7 @@ import com.slide.test.core.asResult
 import com.slide.test.network.service.UsersService
 import com.slide.test.repository.model.UserModel
 import com.slide.test.repository.model.toModel
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
@@ -15,6 +16,8 @@ import javax.inject.Inject
 interface UsersRepository {
 
     fun getUsers(page: Long?): Observable<Result<Page<UserModel>>>
+
+    fun deleteUser(userId: Long) : Completable
 }
 
 internal class UsersRepositoryImplementation @Inject constructor(
@@ -25,5 +28,9 @@ internal class UsersRepositoryImplementation @Inject constructor(
         return usersService.fetchUsers(page)
             .map { pageDto -> pageDto.toModel() }
             .asResult()
+    }
+
+    override fun deleteUser(userId: Long): Completable {
+        return usersService.deleteUser(userId)
     }
 }

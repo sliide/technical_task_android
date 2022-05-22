@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -30,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.slide.test.core_ui.component.AppBackground
 import com.slide.test.core_ui.theme.SliideTestTheme
 import com.slide.test.exercise.navigation.SliideNavHost
+import com.slide.test.users.navigation.UsersDestination
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -38,7 +40,9 @@ fun SliideAppContainer() {
         val navController = rememberNavController()
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
+        val currentDestination = remember(navController) {
+            navBackStackEntry?.destination?.route ?: UsersDestination.route
+        }
 
         AppBackground {
             Scaffold(
@@ -56,7 +60,7 @@ fun SliideAppContainer() {
                 ) {
                     SliideNavHost(
                         navController = navController,
-                        startDestination = currentDestination?.route,
+                        startDestination = currentDestination,
                         modifier = Modifier
                             .padding(padding)
                             .consumedWindowInsets(padding)

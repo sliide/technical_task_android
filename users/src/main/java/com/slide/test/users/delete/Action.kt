@@ -1,4 +1,4 @@
-package com.slide.test.users.listing
+package com.slide.test.users.delete
 
 import com.slide.test.core_ui.mvi.BaseAction
 import com.slide.test.usecase.users.model.User
@@ -9,8 +9,8 @@ import com.slide.test.users.model.UserUI
  */
 sealed class Action : BaseAction {
 
-    object LoadUserList : Action()
+    object UserDeleteResultAcknowledge : Action()
 
-    class UserDeleteIntent(val user: UserUI) : Action()
+    object UserDeleteConfirmation : Action()
 
 }

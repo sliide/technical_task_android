@@ -1,4 +1,4 @@
-package com.slide.test.users
+package com.slide.test.users.listing
 
 import android.util.Log
 import com.slide.test.core.Result
@@ -6,10 +6,8 @@ import com.slide.test.core.TimeFormatter
 import com.slide.test.core.map
 import com.slide.test.core_ui.mvi.BaseViewModel
 import com.slide.test.core_ui.mvi.Reducer
+import com.slide.test.usecase.users.DeleteUserUseCase
 import com.slide.test.usecase.users.GetLatestUsersUseCase
-import com.slide.test.users.listing.Action
-import com.slide.test.users.listing.Change
-import com.slide.test.users.listing.State
 import com.slide.test.users.model.toUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -34,8 +32,8 @@ class UsersViewModel @Inject constructor(
             is Change.Loading -> state.copy(
                 isIdle = false,
                 isLoading = true,
-                userList = emptyList(),
-                isError = false
+                errorMessage = null,
+                userToDelete = null
             )
             is Change.UserList -> state.copy(
                 isLoading = false,
@@ -43,18 +41,13 @@ class UsersViewModel @Inject constructor(
             )
             is Change.Error -> state.copy(
                 isLoading = false,
-                isError = true
+                errorMessage = state.errorMessage
             )
             is Change.EmptyUserList -> state.copy(
                 isLoading = false,
                 isEmpty = true
             )
-            is Change.AddUserError -> TODO()
-            is Change.AddUserSuccess -> TODO()
-            is Change.DeleteUserError -> TODO()
-            is Change.DeleteUserSuccess -> TODO()
-            is Change.ShowDeletePopup -> TODO()
-            is Change.ShowDeleteUserConfirmation -> TODO()
+            is Change.ShowDeleteUserConfirmation -> state.copy(userToDelete = change.userUI)
             Change.ShowAddUserPopup -> TODO()
         }
     }
@@ -65,9 +58,12 @@ class UsersViewModel @Inject constructor(
     }
 
     private fun bindActions() {
-        val allChanges = Observable.merge(userListChanges(), showAddUserPopupChanges())
+        val allChanges = listOf(
+            userListChanges(),
+            userDeleteIntentChange()
+        )
 
-        disposables.add(allChanges
+        disposables.add(Observable.merge(allChanges)
             .scan(initialState, reducer)
             .filter { !it.isIdle }
             .distinctUntilChanged()
@@ -75,9 +71,9 @@ class UsersViewModel @Inject constructor(
             .subscribe(state::accept) { Log.e("TAG", it.stackTraceToString()) })
     }
 
-    private fun showAddUserPopupChanges(): ObservableSource<out Change>? {
-        return actions.ofType(Action.AddUserButtonTapped::class.java)
-            .map { Change.ShowAddUserPopup }
+    private fun userDeleteIntentChange(): Observable<Change> {
+        return actions.ofType(Action.UserDeleteIntent::class.java)
+            .map { Change.ShowDeleteUserConfirmation(it.user) }
     }
 
     private fun userListChanges(): Observable<Change> {

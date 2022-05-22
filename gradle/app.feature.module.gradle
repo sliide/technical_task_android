@@ -11,5 +11,6 @@ dependencies {
     implementation deps.navigation.compose
     implementation deps.navigation.hiltCompose
     implementation deps.navigation.viewModelCompose
+    implementation 'androidx.navigation:navigation-common-ktx:2.4.2'
 
 }

@@ -17,6 +17,7 @@ dependencies {
     implementation deps.compose.activity
     implementation deps.compose.tooling
     implementation deps.compose.rxJava3
+    implementation "androidx.compose.runtime:runtime-livedata:1.2.0-beta02"
 
     androidTestImplementation deps.compose.test.junit4
 

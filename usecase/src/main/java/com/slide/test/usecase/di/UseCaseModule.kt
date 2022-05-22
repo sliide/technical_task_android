@@ -1,5 +1,7 @@
 package com.slide.test.usecase.di
 
+import com.slide.test.usecase.users.DeleteUserUseCase
+import com.slide.test.usecase.users.DeleteUserUseCaseImplementation
 import com.slide.test.usecase.users.GetLatestUsersUseCase
 import com.slide.test.usecase.users.GetLatestUsersUseCaseImplementation
 import dagger.Binds
@@ -18,4 +20,10 @@ abstract class UseCaseModule {
     internal abstract fun bindGetUsersUseCase(
         getUsersUseCase: GetLatestUsersUseCaseImplementation
     ): GetLatestUsersUseCase
+
+
+    @Binds
+    internal abstract fun bindDeleteUserUseCase(
+        getUsersUseCase: DeleteUserUseCaseImplementation
+    ): DeleteUserUseCase
 }
