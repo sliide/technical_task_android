@@ -45,11 +45,11 @@ class UserDeleteViewModel @Inject constructor(
             )
             is Change.DeleteUserSuccess -> state.copy(
                 isIdle = false,
-                userDeleteSuccess = true,
                 isLoading = false,
-                errorMessage = null
+                errorMessage = null,
+                userDeleteSuccess = true
             )
-            is Change.UserDeleteAcknowledged -> initialState
+            is Change.UserDeleteAcknowledged -> initialState.copy(isIdle = false)
         }
     }
 

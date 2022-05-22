@@ -2,6 +2,7 @@
 <resources>
 
     <string name="users_loading">Loading users</string>
+    <string name="user_creation_time">Created %s ago</string>
     <string name="delete_user_dialog_title">Delete user</string>
     <string name="user_delete_dialog_prompt">Are you sure you want to delete %s?</string>
     <string name="user_delete_dialog_button_confirm">Yes</string>
@@ -9,4 +10,12 @@
     <string name="dialog_info_success_title">Success</string>
     <string name="user_delete_dialog_success_message">Successfully deleted %s</string>
     <string name="dialog_button_ok">Ok</string>
+
+    <string name="user_create_dialog_success_message">Successfully added %s</string>
+    <string name="user_create_name_hint">User name</string>
+    <string name="user_create_dialog_title">Add user</string>
+    <string name="user_create_email_hint">User email</string>
+    <string name="user_create_gender_hint">Gender</string>
+    <string name="user_create_cancel_button">Cancel</string>
+    <string name="user_create_save_button">Save</string>
 </resources>

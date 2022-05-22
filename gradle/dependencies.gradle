@@ -27,13 +27,15 @@ ext.versions = [
         reactiveNetwork         : '4.0.0',
         rxAndroid               : '3.0.0',
         rxRelay                 : '3.0.1',
-        rxReplayShare           : '3.0.0',
         hilt                    : '2.38.1',
         hiltViewModel           : '1.0.0-alpha03',
         timber                  : '4.7.1',
         mock_server             : '3.12.0',
-        glide                   : '4.9.0',
-        composeRuntimeRxJava    : '1.1.1'
+        composeRuntimeRxJava    : '1.1.1',
+        composeRuntimeLivedata  : '1.2.0-beta02',
+        composeCustomView       : '1.2.0-alpha01',
+        composePoolingContainer : '1.0.0-beta02'
+
 ]
 
 def core = [
@@ -47,19 +49,24 @@ def compose = [
         activity        : "androidx.activity:activity-compose:$versions.androidxActivity",
         tooling         : "androidx.compose.ui:ui-tooling-preview:$versions.androidxCompose",
         debug           : [
-                testManifest: "androidx.compose.ui:ui-test-manifest:$versions.androidxCompose",
-                tooling     : "androidx.compose.ui:ui-tooling:$versions.androidxCompose"
+                testManifest    : "androidx.compose.ui:ui-test-manifest:$versions.androidxCompose",
+                tooling         : "androidx.compose.ui:ui-tooling:$versions.androidxCompose",
+                customView      : "androidx.customview:customview:$versions.composeCustomView",
+                poolingcontainer: "androidx.customview:customview-poolingcontainer:$versions.composePoolingContainer"
+
         ],
         test            : [
                 junit4: "androidx.compose.ui:ui-test-junit4:$versions.androidxCompose"
         ],
-        rxJava3         : "androidx.compose.runtime:runtime-rxjava3:$versions.composeRuntimeRxJava"
+        rxJava3         : "androidx.compose.runtime:runtime-rxjava3:$versions.composeRuntimeRxJava",
+        livedata        : "androidx.compose.runtime:runtime-livedata:$versions.composeRuntimeRxJava"
 ]
 
 def navigation = [
         compose         : "androidx.navigation:navigation-compose:$versions.androidxNavigation",
         hiltCompose     : "androidx.hilt:hilt-navigation-compose:$versions.hiltNavigationCompose",
-        viewModelCompose: "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.androidxLifecycle"
+        viewModelCompose: "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.androidxLifecycle",
+        ktx             : "androidx.navigation:navigation-common-ktx:$versions.androidxNavigation"
 ]
 
 def kotlin = [
@@ -99,8 +106,7 @@ def rxJava3 = [
         core           : "io.reactivex.rxjava3:rxjava:${versions.rxJava3}",
         reactiveNetwork: "io.github.softartdev:reactivenetwork-rx3:${versions.reactiveNetwork}",
         rxRelay        : "com.jakewharton.rxrelay3:rxrelay:${versions.rxRelay}",
-        bindings       : "com.jakewharton.rxbinding3:rxbinding-design:${versions.rxBindings}",
-        rxReplayShare  : "com.jakewharton.rx3:replaying-share-kotlin:${versions.rxReplayShare}"
+        bindings       : "com.jakewharton.rxbinding3:rxbinding-design:${versions.rxBindings}"
 ]
 
 def hilt = [
@@ -119,13 +125,6 @@ def utils = [
         timber: "com.jakewharton.timber:timber:${versions.timber}",
 ]
 
-def glide = [
-        core       : "com.github.bumptech.glide:glide:${versions.glide}",
-        // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
-        compiler   : "com.github.bumptech.glide:compiler:${versions.glide}",
-        annotations: "com.github.bumptech.glide:annotations:${versions.glide}"
-]
-
 ext.classpath = [
         androidGradlePlugin: "com.android.tools.build:gradle:$versions.gradlePlugin",
         kotlinGradlePlugin : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
@@ -142,6 +141,5 @@ ext.deps = [
         'hilt'      : hilt,
         'moshi'     : moshi,
         'utils'     : utils,
-        'glide'     : glide,
         'firebase'  : firebase
 ]

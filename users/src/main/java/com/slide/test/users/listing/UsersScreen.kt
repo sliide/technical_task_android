@@ -4,7 +4,9 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.twotone.PersonAdd
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,7 +37,8 @@ fun UsersRoute(
     modifier: Modifier = Modifier,
     userDeleteResult: MutableLiveData<Boolean> = MutableLiveData(),
     viewModel: UsersViewModel = hiltViewModel(),
-    navigateToDelete: (Long, String) -> Unit = { _, _ -> }
+    navigateToDelete: (Long, String) -> Unit = { _, _ -> },
+    navigateToCreate: () -> Unit = {}
 ) {
     val viewState by viewModel.observableState.subscribeAsState(viewModel.initialState)
 
@@ -51,23 +54,44 @@ fun UsersRoute(
     UsersScreen(
         modifier = modifier,
         viewState = viewState,
-        onDeleteIntent = { userUI -> navigateToDelete(userUI.id, userUI.name) }
+        onDeleteIntent = { userUI -> navigateToDelete(userUI.id, userUI.name) },
+        onCreateIntent = navigateToCreate
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UsersScreen(
     modifier: Modifier = Modifier,
     viewState: State,
-    onDeleteIntent: (UserUI) -> Unit = {}
+    onDeleteIntent: (UserUI) -> Unit = {},
+    onCreateIntent: () -> Unit
 ) {
-    when {
-        viewState.isLoading -> LoadingUsers()
-        viewState.isEmpty -> EmptyUsers()
-        viewState.isIdle -> {}
-        else -> UserList(modifier, viewState.userList, onDeleteIntent = onDeleteIntent)
+
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                modifier = Modifier.padding(16.dp),
+                onClick = onCreateIntent
+            ) {
+                Icon(
+                    imageVector = Icons.TwoTone.PersonAdd,
+                    tint = MaterialTheme.colorScheme.surfaceTint,
+                    contentDescription = null,
+                    modifier = Modifier
+                )
+            }
+        }
+    ) {
+        when {
+            viewState.isLoading -> LoadingUsers()
+            viewState.isEmpty -> EmptyUsers()
+            viewState.isIdle -> {}
+            else -> UserList(modifier, viewState.userList, onDeleteIntent = onDeleteIntent)
+        }
     }
 }
+
 
 @Composable
 fun UserList(
@@ -75,7 +99,7 @@ fun UserList(
     onDeleteIntent: (UserUI) -> Unit
 ) {
     val configuration = LocalConfiguration.current
-    val columns = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 3
+    val columns = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 3 else 1
     LazyVerticalGrid(
         columns = GridCells.Fixed(columns),
         modifier = modifier.padding(horizontal = 16.dp)
@@ -130,7 +154,7 @@ fun UsersScreenPreview() {
         UserUI(10, "name", "name@email.com", Gender.FEMALE, UserStatus.INACTIVE, creationTime = "00:00:02"),
     )
     SliideTestTheme {
-        UsersScreen(modifier = Modifier, viewState = State(userList = userList), { })
+        UsersScreen(modifier = Modifier, viewState = State(userList = userList), { }, {})
     }
 }
 
@@ -149,6 +173,6 @@ fun UsersScreenLandScapePreview() {
         UserUI(10, "name", "name@email.com", Gender.FEMALE, UserStatus.INACTIVE, creationTime = "00:00:02"),
     )
     SliideTestTheme {
-        UsersScreen(modifier = Modifier, viewState = State(userList = userList), { })
+        UsersScreen(modifier = Modifier, viewState = State(userList = userList), { }, { })
     }
 }

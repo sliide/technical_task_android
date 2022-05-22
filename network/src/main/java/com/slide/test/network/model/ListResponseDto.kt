@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 /**
  * Created by Stefan Halus on 19 May 2022
  */
-data class PageDto<T>(
+data class ListResponseDto<T>(
     val code: Long,
     val meta: PageMetadataDto,
     val data: List<T>

@@ -36,8 +36,6 @@ dependencies {
     implementation deps.rxJava3.android
     implementation deps.rxJava3.core
     implementation deps.rxJava3.reactiveNetwork
-
-    implementation deps.rxJava3.rxReplayShare
     implementation deps.rxJava3.rxRelay
 
     testImplementation deps.test.junit

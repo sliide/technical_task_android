@@ -18,3 +18,11 @@ fun GenderModel.toUseCase() : Gender {
         GenderModel.UNKNOWN -> Gender.UNKNOWN
     }
 }
+
+fun Gender.toModel() : GenderModel {
+    return when(this) {
+        Gender.FEMALE -> GenderModel.FEMALE
+        Gender.MALE -> GenderModel.MALE
+        Gender.UNKNOWN -> GenderModel.UNKNOWN
+    }
+}

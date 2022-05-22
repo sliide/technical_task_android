@@ -88,5 +88,4 @@ dependencies {
     testImplementation deps.test.junit
     testImplementation deps.test.espresso
 
-    //implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 }

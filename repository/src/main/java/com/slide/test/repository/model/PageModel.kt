@@ -2,7 +2,7 @@ package com.slide.test.repository.model
 
 import com.slide.test.core.Page
 import com.slide.test.core.PageMetadata
-import com.slide.test.network.model.PageDto
+import com.slide.test.network.model.ListResponseDto
 import com.slide.test.network.model.PageMetadataDto
 import com.slide.test.network.model.UserDto
 
@@ -10,7 +10,7 @@ import com.slide.test.network.model.UserDto
  * Created by Stefan Halus on 19 May 2022
  */
 
-fun PageDto<UserDto>.toModel(): Page<UserModel> {
+fun ListResponseDto<UserDto>.toModel(): Page<UserModel> {
     return Page(
         code = code,
         meta = meta.toModel(),

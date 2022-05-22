@@ -17,13 +17,12 @@ dependencies {
     implementation deps.compose.activity
     implementation deps.compose.tooling
     implementation deps.compose.rxJava3
-    implementation "androidx.compose.runtime:runtime-livedata:1.2.0-beta02"
+    implementation deps.compose.livedata
 
     androidTestImplementation deps.compose.test.junit4
 
     debugImplementation deps.compose.debug.testManifest
     debugImplementation deps.compose.debug.tooling
-
-    debugImplementation "androidx.customview:customview:1.2.0-alpha01"
-    debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0-beta02"
+    debugImplementation deps.compose.debug.customView
+    debugImplementation deps.compose.debug.poolingcontainer
 }

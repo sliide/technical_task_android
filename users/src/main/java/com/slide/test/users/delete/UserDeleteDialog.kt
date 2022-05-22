@@ -1,20 +1,16 @@
 package com.slide.test.users.delete
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rxjava3.subscribeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.slide.test.core_ui.component.ConfirmationDialog
 import com.slide.test.core_ui.component.InfoDialog
-import com.slide.test.core_ui.component.LoadingWheel
-import com.slide.test.core_ui.theme.Grey10
+import com.slide.test.core_ui.component.LoadingOverlay
 import com.slide.test.users.R
 
 /**
@@ -29,7 +25,6 @@ fun UserDeleteDialogRoute(
     val viewState by viewModel.observableState.subscribeAsState(initial = viewModel.initialState)
 
     UserDeleteDialog(
-        modifier = modifier,
         viewState = viewState,
         onDismiss = onDismiss,
         onApprove = { viewModel.dispatch(Action.UserDeleteConfirmation) }
@@ -39,16 +34,17 @@ fun UserDeleteDialogRoute(
 
 @Composable
 fun UserDeleteDialog(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     viewState: State,
     onDismiss: (Boolean) -> Unit,
     onApprove: () -> Unit,
 ) {
+
     when {
         viewState.isLoading -> LoadingOverlay()
         viewState.userDeleteSuccess == false -> ErrorDialog(viewState.errorMessage) { onDismiss(false) }
-        viewState.userDeleteSuccess == true -> SuccessDialog(viewState.userName!!) { onDismiss(true) }
-        viewState.isIdle -> ConfirmationDialog(
+        viewState.userDeleteSuccess == true -> SuccessDialog(viewState.userName) { onDismiss(true) }
+        else -> ConfirmationDialog(
             title = stringResource(R.string.delete_user_dialog_title),
             text = stringResource(R.string.user_delete_dialog_prompt, viewState.userName),
             confirmActionText = stringResource(R.string.user_delete_dialog_button_confirm),
@@ -56,7 +52,6 @@ fun UserDeleteDialog(
             onCancel = { onDismiss(false) },
             onApprove = onApprove
         )
-
     }
 }
 
@@ -70,19 +65,6 @@ fun SuccessDialog(userName: String = "", onDismiss: () -> Unit) {
         onDismiss = onDismiss
     )
 
-}
-
-@Composable
-fun LoadingOverlay(modifier: Modifier = Modifier) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = Grey10)
-    ) {
-        LoadingWheel(contentDesc = "")
-    }
 }
 
 @Composable

@@ -2,6 +2,7 @@ package com.slide.test.core
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import java.lang.Exception
 
 /**
  * Created by Stefan Halus on 19 May 2022
@@ -12,11 +13,11 @@ sealed interface Result<out T> {
     object Loading : Result<Nothing>
 }
 
-fun <T> Single<T>.asResult(): Observable<Result<T>> {
+fun <T> Single<T>.asResult(errorHandler:(Throwable) -> Throwable = { it } ): Observable<Result<T>> {
     return this
         .toObservable()
         .map<Result<T>> { Result.Success(it) }
-        .onErrorReturn { Result.Error(it) }
+        .onErrorReturn { Result.Error(errorHandler.invoke(it)) }
         .startWithItem(Result.Loading)
 }
 

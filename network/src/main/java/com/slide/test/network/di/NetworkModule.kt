@@ -1,6 +1,7 @@
 package com.slide.test.network.di
 
 import com.slide.test.core.NetworkConfig
+import com.slide.test.network.errors.ErrorHandlingInterceptor
 import com.slide.test.network.GoRestAuthInterceptor
 import com.slide.test.network.service.UsersService
 import dagger.Module
@@ -38,11 +39,13 @@ object NetworkModule {
     @Singleton
     internal fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        goRestAuthInterceptor: GoRestAuthInterceptor
+        goRestAuthInterceptor: GoRestAuthInterceptor,
+        errorHandlingInterceptor: ErrorHandlingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(goRestAuthInterceptor)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(errorHandlingInterceptor)
             .build()
     }
 
@@ -50,6 +53,12 @@ object NetworkModule {
     @Singleton
     internal fun providesAuthInterceptor(networkConfig: NetworkConfig) : GoRestAuthInterceptor {
             return GoRestAuthInterceptor(networkConfig.accessToken)
+    }
+
+    @Provides
+    @Singleton
+    internal fun providesErrorHandlingInterceptor() : ErrorHandlingInterceptor {
+            return ErrorHandlingInterceptor()
     }
 
     @Provides

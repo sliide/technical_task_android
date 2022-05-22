@@ -21,7 +21,7 @@ fun InfoDialog(
         title = { Text(text = title) },
         text = { Text(text = text) },
         confirmButton = {
-            Button(onClick = { onApprove() }) {
+            Button(onClick = { onApprove()  }) {
                 Text(buttonText)
             }
         }
