@@ -16,9 +16,4 @@ sealed class Change {
     data class Error(val throwable: Throwable) : Change()
 
     object EmptyUserList : Change()
-
-    object ShowAddUserPopup : Change()
-
-    data class ShowDeleteUserConfirmation(val userUI:UserUI) : Change()
-
 }

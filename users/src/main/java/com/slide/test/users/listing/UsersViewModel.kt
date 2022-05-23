@@ -47,8 +47,6 @@ class UsersViewModel @Inject constructor(
                 isLoading = false,
                 isEmpty = true
             )
-            is Change.ShowDeleteUserConfirmation -> state.copy(userToDelete = change.userUI)
-            Change.ShowAddUserPopup -> TODO()
         }
     }
 
@@ -59,8 +57,7 @@ class UsersViewModel @Inject constructor(
 
     private fun bindActions() {
         val allChanges = listOf(
-            userListChanges(),
-            userDeleteIntentChange()
+            userListChanges()
         )
 
         disposables.add(Observable.merge(allChanges)
@@ -69,11 +66,6 @@ class UsersViewModel @Inject constructor(
             .distinctUntilChanged()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(state::accept) { Log.e("TAG", it.stackTraceToString()) })
-    }
-
-    private fun userDeleteIntentChange(): Observable<Change> {
-        return actions.ofType(Action.UserDeleteIntent::class.java)
-            .map { Change.ShowDeleteUserConfirmation(it.user) }
     }
 
     private fun userListChanges(): Observable<Change> {

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.MutableLiveData
+import com.slide.test.core_ui.component.InfoDialog
 import com.slide.test.core_ui.component.LoadingWheel
 import com.slide.test.core_ui.theme.SliideTestTheme
 import com.slide.test.usecase.users.model.Gender
@@ -55,7 +56,8 @@ fun UsersRoute(
         modifier = modifier,
         viewState = viewState,
         onDeleteIntent = { userUI -> navigateToDelete(userUI.id, userUI.name) },
-        onCreateIntent = navigateToCreate
+        onCreateIntent = navigateToCreate,
+        onErrorAcknowledged = { viewModel.dispatch(Action.LoadUserList) }
     )
 }
 
@@ -65,7 +67,8 @@ fun UsersScreen(
     modifier: Modifier = Modifier,
     viewState: State,
     onDeleteIntent: (UserUI) -> Unit = {},
-    onCreateIntent: () -> Unit
+    onCreateIntent: () -> Unit,
+    onErrorAcknowledged: () -> Unit = {}
 ) {
 
     Scaffold(
@@ -86,7 +89,7 @@ fun UsersScreen(
         when {
             viewState.isLoading -> LoadingUsers()
             viewState.isEmpty -> EmptyUsers()
-            viewState.isIdle -> {}
+            viewState.errorMessage != null -> ErrorDialog(errorMessage = viewState.errorMessage, onErrorAcknowledged)
             else -> UserList(modifier, viewState.userList, onDeleteIntent = onDeleteIntent)
         }
     }
@@ -145,6 +148,22 @@ fun LoadingUsers(modifier: Modifier = Modifier) {
 fun EmptyUsers() {
     Text(text = "Empty users", fontSize = 20.sp, modifier = Modifier.padding(30.dp))
 }
+
+@Composable
+fun ErrorDialog(
+    errorMessage: String?,
+    onDismiss: () -> Unit
+) {
+    InfoDialog(
+        title = "Error",
+        text = errorMessage ?: "",
+        buttonText = "Retry",
+        onApprove = onDismiss,
+        onDismiss = onDismiss
+    )
+
+}
+
 
 @Preview(showBackground = true)
 @Composable
