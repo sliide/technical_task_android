@@ -1,6 +1,5 @@
 package com.slide.test.network.service
 
-import com.slide.test.network.CustomHeaders.NO_AUTH
 import com.slide.test.network.model.CreateUserRequestDto
 import com.slide.test.network.model.ListResponseDto
 import com.slide.test.network.model.ResponseDto
@@ -15,7 +14,6 @@ import retrofit2.http.*
 
 interface UsersService {
 
-    @Headers("$NO_AUTH:true")
     @GET("public-api/users")
     fun fetchUsers(@Query("page") page: Long?): Single<ListResponseDto<UserDto>>
 
