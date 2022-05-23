@@ -44,7 +44,7 @@ class GetLatestUsersUseCaseImplementationTest {
     fun setUp() {
         objectUnderTest = GetLatestUsersUseCaseImplementation(usersRepository, creationTimeProvider)
         whenever(usersRepository.getUsers(null)).doReturn(Observable.just(getMockedPageResult()))
-        whenever(usersRepository.getUsers(100)).doReturn(Observable.just(getMockedPageResult()))
+        //whenever(usersRepository.getUsers(100)).doReturn(Observable.just(getMockedPageResult()))
 
         whenever(creationTimeProvider.getCurrentTime()).doReturn(100)
         whenever(creationTimeProvider.getAppStartTime()).doReturn(90)

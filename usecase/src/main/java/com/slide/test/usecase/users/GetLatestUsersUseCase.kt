@@ -38,7 +38,7 @@ internal class GetLatestUsersUseCaseImplementation @Inject constructor(
     @OptIn(ExperimentalTime::class)
     private fun getLastPage(metadata: PageMetadata): Observable<Result<List<User>>> {
         val lastPage = metadata.pages
-        return usersRepository.getUsers(lastPage)
+        return usersRepository.getUsers(null)
             .switchMap { result ->
                 Observable.interval(1, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.computation())
