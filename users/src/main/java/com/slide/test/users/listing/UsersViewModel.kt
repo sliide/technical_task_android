@@ -41,7 +41,7 @@ class UsersViewModel @Inject constructor(
             )
             is Change.Error -> state.copy(
                 isLoading = false,
-                errorMessage = state.errorMessage
+                errorMessage = change.throwable?.message
             )
             is Change.EmptyUserList -> state.copy(
                 isLoading = false,

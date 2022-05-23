@@ -7,10 +7,9 @@ import com.slide.test.repository.UsersRepository
 import com.slide.test.usecase.users.model.User
 import com.slide.test.usecase.users.model.toUseCase
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 
 /**
@@ -21,9 +20,10 @@ interface GetLatestUsersUseCase {
 }
 
 internal class GetLatestUsersUseCaseImplementation @Inject constructor(
-    private val usersRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val createTimeProvider: CreationTimeProvider
 ) : GetLatestUsersUseCase {
-    val currentTime = System.currentTimeMillis()
+
     override fun execute(): Observable<Result<List<User>>> {
         return usersRepository.getUsers(null)
             .flatMap { usersResource ->
@@ -41,9 +41,10 @@ internal class GetLatestUsersUseCaseImplementation @Inject constructor(
         return usersRepository.getUsers(lastPage)
             .switchMap { result ->
                 Observable.interval(1, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.computation())
                     .map {
-                        val now = System.currentTimeMillis()
-                        result.map { it.data.map { userModel -> userModel.toUseCase(now - currentTime) } }
+                        val now = createTimeProvider.getCurrentTime()
+                        result.map { it.data.map { userModel -> userModel.toUseCase(now - createTimeProvider.getAppStartTime()) } }
                     }
             }
     }

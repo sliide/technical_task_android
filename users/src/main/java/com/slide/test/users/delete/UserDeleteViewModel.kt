@@ -40,7 +40,7 @@ class UserDeleteViewModel @Inject constructor(
             is Change.DeleteUserError -> state.copy(
                 isIdle = false,
                 isLoading = false,
-                errorMessage = state.errorMessage,
+                errorMessage = change.error?.message,
                 userDeleteSuccess = false
             )
             is Change.DeleteUserSuccess -> state.copy(

@@ -30,4 +30,12 @@ abstract class UseCaseModule {
     internal abstract fun bindCreateUserUseCase(
         getUsersUseCase: CreateUserUseCaseImplementation
     ): CreateUserUseCase
+
+
+    @Binds
+    internal abstract fun bindCreationTimeProvider(
+        getUsersUseCase: CreationTimeProviderImplementation
+    ): CreationTimeProvider
+
+
 }

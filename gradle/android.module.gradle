@@ -39,6 +39,9 @@ dependencies {
     implementation deps.rxJava3.rxRelay
 
     testImplementation deps.test.junit
+    testImplementation deps.test.mockitoKotlin
+    testImplementation deps.test.mockitoInline
+    testImplementation deps.test.androidCoreTesting
 
     androidTestImplementation deps.test.androidExt
 }

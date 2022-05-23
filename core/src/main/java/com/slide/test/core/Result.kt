@@ -18,7 +18,6 @@ fun <T> Single<T>.asResult(errorHandler:(Throwable) -> Throwable = { it } ): Obs
         .toObservable()
         .map<Result<T>> { Result.Success(it) }
         .onErrorReturn { Result.Error(errorHandler.invoke(it)) }
-        .startWithItem(Result.Loading)
 }
 
 

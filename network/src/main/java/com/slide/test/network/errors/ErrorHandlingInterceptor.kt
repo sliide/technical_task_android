@@ -25,7 +25,7 @@ class ErrorHandlingInterceptor : Interceptor {
         val responseBody = copy(response.body, Long.MAX_VALUE)
         val rawJson = JSONObject(responseBody?.string())
 
-        return if (errorCodes.contains(rawJson.getInt("code"))) {
+        return if (ERROR_CODES.contains(rawJson.getInt("code"))) {
             throw getException(rawJson)
         } else {
             response
@@ -55,7 +55,7 @@ class ErrorHandlingInterceptor : Interceptor {
     }
 
     companion object {
-        val errorCodes = 400..500
+        val ERROR_CODES = 400..500
     }
 
 //    200: OK. Everything worked as expected.
