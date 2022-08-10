@@ -1,7 +1,6 @@
 package com.sliide.demoapp.ui.adduser
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +45,6 @@ class AddUserDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.AppTheme_FullScreenDialog)
-        Log.e("DEMO", "VM instance is ${viewModel.hashCode()}")
         lifecycleScope.launchWhenResumed {
             viewModel.viewState.collect { viewState ->
                 processViewState(viewState)
@@ -115,7 +113,6 @@ class AddUserDialogFragment : DialogFragment() {
     }
 
     private fun processViewState(viewState: AddUserViewState) {
-        Log.e("DEMO", "AddUserViewState ${viewState}")
         binding.emailInputField.error = viewState.emailError
         binding.nameInputField.error = viewState.nameError
         if (viewState.user != null) {

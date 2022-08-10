@@ -1,7 +1,6 @@
 package com.sliide.demoapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
