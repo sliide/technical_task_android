@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.035</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.1875</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-condensed-light</item>
+    </style>
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="errorTextColor">@color/light_orange</item>
+        <item name="errorIconTint">@color/light_orange</item>
+        <item name="android:background">@color/background_dark</item>
+        <item name="hintTextColor">@color/light_green</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="maxLines">1</item>
+    </style>
+
+    <style name="AppTheme.FullScreenDialog" parent="Theme.TestDemoApp">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/background_medium</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:background">@color/background_light</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>
