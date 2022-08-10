@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">TestDemoApp</string>
+    <string name="title_activity_main">Sliide Demo App</string>
+    <string name="users_fragment">Users</string>
+    <string name="email">email</string>
+    <string name="name">name</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="status">Status</string>
+    <string name="gender">Gender</string>
+    <string name="remove_user">Are you sure you want to remove this user?</string>
+    <string name="remove">Remove</string>
+    <string name="dismiss">Dismiss</string>
+</resources>
