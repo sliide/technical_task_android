@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Hanna Task</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="my_contacts">My contacts</string>
+
+<!--users info-->
+    <string name="user_name">Name: %s</string>
+    <string name="user_email">Email: %s</string>
+    <string name="user_created_at">Created: %s</string>
+
+    <string name="add_user_title">Add new user</string>
+    <string name="add_user_cancel">Cancel</string>
+    <string name="add_user_submit">Add user</string>
+    <string name="add_user_hint_name">Name</string>
+    <string name="add_user_hint_email">Email</string>
+    <string name="add_user_hint_gender">Gender</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+</resources>
